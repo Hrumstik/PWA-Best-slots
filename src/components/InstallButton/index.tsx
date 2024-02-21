@@ -8,6 +8,7 @@ import { install, stopInstalling } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
+import { RootState } from "../../Redux/store/store";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -44,7 +45,9 @@ const AnimatedButton = styled<any>(motion(Button), {
 const InstallButton: React.FC<Props> = ({ link }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [isPWAActive, setIsPWAActive] = useState(false);
-  const isInstalling = useSelector(({ install }) => install.isInstalling);
+  const isInstalling = useSelector(
+    (state: RootState) => state.install.isInstalling
+  );
   const dispatch = useDispatch();
   const intl = useIntl();
 

@@ -6,9 +6,12 @@ import {
   LogoInProgressWrapper,
 } from "../styles";
 import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store/store";
 
 function AppLogo() {
-  const isInstalling = useSelector(({ install }) => install.isInstalling);
+  const isInstalling = useSelector(
+    (state: RootState) => state.install.isInstalling
+  );
 
   return (
     <>
