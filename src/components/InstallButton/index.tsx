@@ -4,11 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  install,
-  startFakeInstall,
-  stopInstalling,
-} from "../../Redux/feat/InstallSlice";
+import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
@@ -77,7 +73,6 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     );
 
     window.addEventListener("appinstalled", () => {
-      dispatch(stopInstalling());
       setIsPWAActive(true);
     });
 
