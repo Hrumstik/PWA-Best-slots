@@ -8,7 +8,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store/store";
 import { useEffect, useState } from "react";
-import { stopFakeInstall, stopInstalling } from "../../Redux/feat/InstallSlice";
+import {
+  setIsInstalled,
+  stopFakeInstall,
+  stopInstalling,
+} from "../../Redux/feat/InstallSlice";
 
 function AppLogo() {
   const [installProgress, setInstallProgress] = useState(0);
@@ -39,6 +43,7 @@ function AppLogo() {
           setInstallProgress(0);
           dispatch(stopFakeInstall());
           dispatch(stopInstalling());
+          dispatch(setIsInstalled());
         }
       }, 1000);
     };

@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface InstalState {
   isInstalling: boolean;
   fakeInstall: boolean;
+  isInstalled: boolean;
 }
 
 const initialState: InstalState = {
   isInstalling: false,
   fakeInstall: false,
+  isInstalled: false,
 };
 
 export const instalSlice = createSlice({
@@ -26,10 +28,18 @@ export const instalSlice = createSlice({
     stopInstalling: (state) => {
       state.isInstalling = false;
     },
+    setIsInstalled: (state) => {
+      state.isInstalled = true;
+    },
   },
 });
 
-export const { install, stopInstalling, startFakeInstall, stopFakeInstall } =
-  instalSlice.actions;
+export const {
+  install,
+  stopInstalling,
+  startFakeInstall,
+  stopFakeInstall,
+  setIsInstalled,
+} = instalSlice.actions;
 
 export default instalSlice.reducer;

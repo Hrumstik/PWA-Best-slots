@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
@@ -51,9 +45,11 @@ const AnimatedButton = styled<any>(motion(Button), {
 
 const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
+  );
+  const isInstalled = useSelector(
+    (state: RootState) => state.install.isInstalled
   );
 
   const dispatch = useDispatch();
@@ -94,7 +90,6 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
         dispatch(startFakeInstall());
-        setIsInstalled(true);
       } else {
         alert("PWA installation rejected");
       }
