@@ -1,7 +1,18 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { useEffect } from "react";
 
-function PageLoader() {
+interface Props {
+  isPWAActiveted: boolean;
+  pwaLink: string;
+}
+
+const PageLoader: React.FC<Props> = ({ isPWAActiveted, pwaLink }) => {
+  useEffect(() => {
+    if (isPWAActiveted) {
+      window.location.href = pwaLink;
+    }
+  });
   return (
     <Box
       display="flex"
@@ -12,6 +23,6 @@ function PageLoader() {
       <CircularProgress />
     </Box>
   );
-}
+};
 
 export default PageLoader;

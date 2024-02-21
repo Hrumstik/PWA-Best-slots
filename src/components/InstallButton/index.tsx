@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,7 +14,6 @@ import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
-import PageLoader from "../PageLoader";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -17,7 +22,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 interface Props {
   appLink: string;
-  pwaLink: string;
+  setIsPWAActive: Dispatch<SetStateAction<boolean>>;
 }
 
 const AnimatedButton = styled<any>(motion(Button), {
@@ -44,9 +49,8 @@ const AnimatedButton = styled<any>(motion(Button), {
   }
 `;
 
-const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
+const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
-  const [isPWAActive, setIsPWAActive] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
@@ -62,7 +66,6 @@ const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      window.location.href = pwaLink;
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
@@ -75,17 +78,13 @@ const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
       handleBeforeInstallPrompt as EventListener
     );
 
-    window.addEventListener("appinstalled", () => {
-      setIsPWAActive(true);
-    });
-
     return () => {
       window.removeEventListener(
         "beforeinstallprompt",
         handleBeforeInstallPrompt as EventListener
       );
     };
-  }, [appLink, dispatch, pwaLink]);
+  }, [appLink, dispatch, setIsPWAActive]);
 
   const installPWA = async () => {
     dispatch(install());
@@ -107,26 +106,22 @@ const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
     window.open(appLink, "_blank");
   };
 
-  if (isPWAActive) {
-    return <PageLoader />;
-  } else {
-    return isInstalled ? (
-      <CustomButton fullWidth onClick={openLink}>
-        {intl.formatMessage({ id: "open" })}
-      </CustomButton>
-    ) : (
-      <AnimatedButton
-        fullWidth
-        onClick={!isInstalling && installPWA}
-        $isInstalling={isInstalling}
-        disabled={isInstalling}
-      >
-        {isInstalling
-          ? intl.formatMessage({ id: "open" })
-          : intl.formatMessage({ id: "install" })}
-      </AnimatedButton>
-    );
-  }
+  return isInstalled ? (
+    <CustomButton fullWidth onClick={openLink}>
+      {intl.formatMessage({ id: "open" })}
+    </CustomButton>
+  ) : (
+    <AnimatedButton
+      fullWidth
+      onClick={!isInstalling && installPWA}
+      $isInstalling={isInstalling}
+      disabled={isInstalling}
+    >
+      {isInstalling
+        ? intl.formatMessage({ id: "open" })
+        : intl.formatMessage({ id: "install" })}
+    </AnimatedButton>
+  );
 };
 
 export default InstallButton;

@@ -34,6 +34,8 @@ import {
 import InstallButton from "./components/InstallButton";
 import AppLogo from "./components/AppLogo";
 import { useIntl } from "react-intl";
+import { useState } from "react";
+import PageLoader from "./components/PageLoader";
 
 const reviewsData = [
   {
@@ -88,8 +90,14 @@ const ratingsData = [
 
 export default function Index() {
   const intl = useIntl();
+  const [isPWAActive, setIsPWAActive] = useState(false);
 
-  return (
+  return isPWAActive ? (
+    <PageLoader
+      isPWAActiveted={isPWAActive}
+      pwaLink="https://benioosn.com/ee27112d91?extra_param_1=49487"
+    />
+  ) : (
     <MainContainer>
       <AppDescriptionSection>
         <AppHeader>
@@ -131,10 +139,7 @@ export default function Index() {
             </AppStatisticsCardItemContent>
           </AppStatisticsCardItem>
         </AppStatisticsCard>
-        <InstallButton
-          appLink="/"
-          pwaLink="https://benioosn.com/ee27112d91?extra_param_1=49487"
-        />
+        <InstallButton setIsPWAActive={setIsPWAActive} appLink="/" />
         <ContentSlider />
         <AboutGameContainer>
           <OpenSectionButton string="about" />
