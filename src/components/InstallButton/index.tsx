@@ -4,7 +4,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { install, stopInstalling } from "../../Redux/feat/InstallSlice";
+import {
+  install,
+  startFakeInstall,
+  stopInstalling,
+} from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
@@ -92,7 +96,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
       await installPromptRef.current.prompt();
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
-        console.log("PWA installation was accepted");
+        dispatch(startFakeInstall());
       } else {
         alert("PWA installation rejected");
       }
