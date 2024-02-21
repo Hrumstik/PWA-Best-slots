@@ -49,6 +49,9 @@ const InstallButton: React.FC<Props> = ({ link }) => {
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
+  const fakeInstall = useSelector(
+    (state: RootState) => state.install.fakeInstall
+  );
   const dispatch = useDispatch();
   const intl = useIntl();
 
@@ -103,7 +106,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     window.location.href = link;
   };
 
-  return isPWAActive ? (
+  return isPWAActive && fakeInstall ? (
     <CustomButton fullWidth onClick={openLink}>
       {intl.formatMessage({ id: "open" })}
     </CustomButton>

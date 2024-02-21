@@ -65,7 +65,7 @@ function AppLogo() {
             value={installProgress}
             disableShrink
             size={56}
-            thickness={1}
+            thickness={3}
             sx={{
               position: "absolute",
               color: "primary.main",
@@ -82,7 +82,7 @@ function AppLogo() {
           <CircularProgress
             disableShrink
             size={56}
-            thickness={1}
+            thickness={3}
             sx={{
               position: "absolute",
               color: "primary.main",
