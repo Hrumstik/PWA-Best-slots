@@ -101,13 +101,9 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     }
   };
 
-  const openLink = () => {
-    window.location.href = link;
-  };
-
   return isPWAActive && !fakeInstall ? (
     <a href={link}>
-      <CustomButton fullWidth onClick={openLink}>
+      <CustomButton fullWidth>
         {intl.formatMessage({ id: "open" })}
       </CustomButton>
     </a>
