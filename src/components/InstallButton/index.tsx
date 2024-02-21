@@ -42,6 +42,7 @@ const AnimatedButton = styled<any>(motion(Button), {
       props.$isInstalling ? colors.background : colors.primary};
   }
 `;
+
 const InstallButton: React.FC<Props> = ({ link }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [isPWAActive, setIsPWAActive] = useState(false);
