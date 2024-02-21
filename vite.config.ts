@@ -12,8 +12,8 @@ export default defineConfig({
         name: "Best slots",
         short_name: "Best slots",
         theme_color: "#ffffff",
-        start_url: "./",
-        scope: "./",
+        start_url: "https://pwa-best-slots.vercel.app/",
+        scope: "https://pwa-best-slots.vercel.app/",
         prefer_related_applications: false,
         icons: [
           {
