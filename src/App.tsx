@@ -89,6 +89,9 @@ const ratingsData = [
 ];
 
 export default function Index() {
+  const [pwaLink, setPwaLink] = useState(
+    "https://benioosn.com/ee27112d91?extra_param_1=49487"
+  );
   const intl = useIntl();
   const [isPWAActive, setIsPWAActive] = useState(false);
 
@@ -100,13 +103,20 @@ export default function Index() {
     if (isPWAActiveted) {
       setIsPWAActive(true);
     }
-  }, []);
+
+    const searchParams = new URLSearchParams(window.location.search);
+    let newPwaLink = pwaLink;
+
+    for (const param of searchParams) {
+      const [key, value] = param;
+      newPwaLink += `&${key}=${value}`;
+    }
+
+    setPwaLink(newPwaLink);
+  }, [pwaLink]);
 
   return isPWAActive ? (
-    <PageLoader
-      isPWAActiveted={isPWAActive}
-      pwaLink="https://benioosn.com/ee27112d91?extra_param_1=49487"
-    />
+    <PageLoader isPWAActiveted={isPWAActive} pwaLink={pwaLink} />
   ) : (
     <MainContainer>
       <AppDescriptionSection>
