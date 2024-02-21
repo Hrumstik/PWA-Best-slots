@@ -10,7 +10,7 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
         name: "Best slots",
-        display: "fullscreen",
+        display: "minimal-ui",
         short_name: "Best slots",
         theme_color: "#ffffff",
         start_url: "/",
