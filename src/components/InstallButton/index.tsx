@@ -47,11 +47,9 @@ const AnimatedButton = styled<any>(motion(Button), {
 const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [isPWAActive, setIsPWAActive] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(true);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
-  );
-  const fakeInstall = useSelector(
-    (state: RootState) => state.install.fakeInstall
   );
 
   const dispatch = useDispatch();
@@ -97,6 +95,7 @@ const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
         dispatch(startFakeInstall());
+        setIsInstalled(true);
       } else {
         alert("PWA installation rejected");
       }
@@ -111,7 +110,7 @@ const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
   if (isPWAActive) {
     return <PageLoader />;
   } else {
-    return !fakeInstall ? (
+    return isInstalled ? (
       <CustomButton fullWidth onClick={openLink}>
         {intl.formatMessage({ id: "open" })}
       </CustomButton>
