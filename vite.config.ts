@@ -14,7 +14,8 @@ export default defineConfig({
         short_name: "Best slots",
         theme_color: "#ffffff",
         start_url: "/",
-        prefer_related_applications: false,
+        scope: "/",
+        prefer_related_applications: true,
         icons: [
           {
             src: "pwa-64x64.png",
