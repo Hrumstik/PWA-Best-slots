@@ -55,24 +55,21 @@ function AppLogo() {
   return (
     <>
       {showCircularProgress && (
-        <>
-          11111111111111111
-          <LogoInProgressWrapper>
-            <LogoInProgressContainer>
-              <AppImg src="/icon.png" alt="App logo" />
-            </LogoInProgressContainer>
+        <LogoInProgressWrapper>
+          <LogoInProgressContainer>
+            <AppImg src="/icon.png" alt="App logo" />
+          </LogoInProgressContainer>
 
-            <CircularProgress
-              disableShrink
-              value={installProgress}
-              thickness={1}
-              sx={{
-                position: "absolute",
-                color: "primary.main",
-              }}
-            />
-          </LogoInProgressWrapper>
-        </>
+          <CircularProgress
+            disableShrink
+            size={installProgress}
+            thickness={1}
+            sx={{
+              position: "absolute",
+              color: "primary.main",
+            }}
+          />
+        </LogoInProgressWrapper>
       )}
       {showPermanentCircularProgress && (
         <LogoInProgressWrapper>
