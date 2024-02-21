@@ -30,15 +30,18 @@ function AppLogo() {
   useEffect(() => {
     const fakeInstall = async () => {
       let progress = 0;
+      const startTime = Date.now();
+
       const interval = setInterval(() => {
         const randomIncrement = Math.random() * (30 - 10) + 10;
-
         progress += randomIncrement;
         progress = Math.min(progress, 100);
 
         setInstallProgress(progress);
 
-        if (progress >= 100) {
+        const elapsedTime = (Date.now() - startTime) / 1000;
+
+        if (progress >= 100 && elapsedTime >= 10) {
           clearInterval(interval);
           setInstallProgress(0);
           dispatch(stopFakeInstall());
