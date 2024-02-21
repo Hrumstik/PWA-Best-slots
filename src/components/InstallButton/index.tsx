@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
@@ -62,7 +61,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      window.location.href = link;
+      window.open(link, "_blank", "noopener,noreferrer");
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {

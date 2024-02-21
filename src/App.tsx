@@ -131,7 +131,7 @@ export default function Index() {
             </AppStatisticsCardItemContent>
           </AppStatisticsCardItem>
         </AppStatisticsCard>
-        <InstallButton link="https://benioosn.com/ee27112d91?extra_param_1=49487" />
+        <InstallButton link="https://pwa-best-slots.vercel.app/" />
         <ContentSlider />
         <AboutGameContainer>
           <OpenSectionButton string="about" />
