@@ -61,7 +61,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      window.open(link, "_blank", "noopener,noreferrer");
+      window.location.href = link;
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
