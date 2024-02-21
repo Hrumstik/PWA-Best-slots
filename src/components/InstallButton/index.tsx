@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
+import PageLoader from "../PageLoader";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -15,7 +16,8 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 interface Props {
-  link: string;
+  appLink: string;
+  pwaLink: string;
 }
 
 const AnimatedButton = styled<any>(motion(Button), {
@@ -42,7 +44,7 @@ const AnimatedButton = styled<any>(motion(Button), {
   }
 `;
 
-const InstallButton: React.FC<Props> = ({ link }) => {
+const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [isPWAActive, setIsPWAActive] = useState(false);
   const isInstalling = useSelector(
@@ -57,12 +59,12 @@ const InstallButton: React.FC<Props> = ({ link }) => {
 
   useEffect(() => {
     const isPWAActiveted = window.matchMedia(
-      "(display-mode: minimal-ui)"
+      "(display-mode: standalone)"
     ).matches;
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      window.location.href = link;
+      window.location.href = pwaLink;
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
@@ -85,7 +87,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
         handleBeforeInstallPrompt as EventListener
       );
     };
-  }, [link, dispatch]);
+  }, [appLink, dispatch, pwaLink]);
 
   const installPWA = async () => {
     dispatch(install());
@@ -103,25 +105,29 @@ const InstallButton: React.FC<Props> = ({ link }) => {
   };
 
   const openLink = () => {
-    window.open(link, "_blank");
+    window.open(appLink, "_blank");
   };
 
-  return isPWAActive && !fakeInstall ? (
-    <CustomButton fullWidth onClick={openLink}>
-      {intl.formatMessage({ id: "open" })}
-    </CustomButton>
-  ) : (
-    <AnimatedButton
-      fullWidth
-      onClick={!isInstalling && installPWA}
-      $isInstalling={isInstalling}
-      disabled={isInstalling}
-    >
-      {isInstalling
-        ? intl.formatMessage({ id: "open" })
-        : intl.formatMessage({ id: "install" })}
-    </AnimatedButton>
-  );
+  if (isPWAActive) {
+    return <PageLoader />;
+  } else {
+    return !fakeInstall ? (
+      <CustomButton fullWidth onClick={openLink}>
+        {intl.formatMessage({ id: "open" })}
+      </CustomButton>
+    ) : (
+      <AnimatedButton
+        fullWidth
+        onClick={!isInstalling && installPWA}
+        $isInstalling={isInstalling}
+        disabled={isInstalling}
+      >
+        {isInstalling
+          ? intl.formatMessage({ id: "open" })
+          : intl.formatMessage({ id: "install" })}
+      </AnimatedButton>
+    );
+  }
 };
 
 export default InstallButton;
