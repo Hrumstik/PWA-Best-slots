@@ -56,14 +56,6 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   const intl = useIntl();
 
   useEffect(() => {
-    const isPWAActiveted = window.matchMedia(
-      "(display-mode: standalone)"
-    ).matches;
-
-    if (isPWAActiveted) {
-      setIsPWAActive(true);
-    }
-
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       installPromptRef.current = e;

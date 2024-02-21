@@ -34,7 +34,7 @@ import {
 import InstallButton from "./components/InstallButton";
 import AppLogo from "./components/AppLogo";
 import { useIntl } from "react-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageLoader from "./components/PageLoader";
 
 const reviewsData = [
@@ -91,6 +91,16 @@ const ratingsData = [
 export default function Index() {
   const intl = useIntl();
   const [isPWAActive, setIsPWAActive] = useState(false);
+
+  useEffect(() => {
+    const isPWAActiveted = window.matchMedia(
+      "(display-mode: fullscreen)"
+    ).matches;
+
+    if (isPWAActiveted) {
+      setIsPWAActive(true);
+    }
+  }, []);
 
   return isPWAActive ? (
     <PageLoader
