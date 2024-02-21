@@ -4,8 +4,16 @@ import App from "./App.tsx";
 import { store } from "./Redux/store/store.tsx";
 import { Provider } from "react-redux";
 import { IntlProvider } from "react-intl";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import English from "./Locales/English.json";
 import "normalize.css";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -26,7 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <IntlProvider locale={userLocale} messages={English}>
-        <App />
+        <RouterProvider router={router} />
       </IntlProvider>
     </Provider>
   </React.StrictMode>
