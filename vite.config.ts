@@ -10,10 +10,10 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
         name: "Best slots",
+        display: "standalone",
         short_name: "Best slots",
         theme_color: "#ffffff",
-        start_url: "https://pwa-best-slots.vercel.app/",
-        scope: "https://pwa-best-slots.vercel.app/",
+        start_url: "/",
         prefer_related_applications: false,
         icons: [
           {
