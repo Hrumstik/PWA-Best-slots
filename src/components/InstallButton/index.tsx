@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
@@ -51,18 +52,19 @@ const InstallButton: React.FC<Props> = ({ link }) => {
   const fakeInstall = useSelector(
     (state: RootState) => state.install.fakeInstall
   );
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const intl = useIntl();
 
   useEffect(() => {
-    console.log(isPWAActive);
     const isPWAActiveted = window.matchMedia(
-      "(display-mode: standalone)"
+      "(display-mode: minimal-ui)"
     ).matches;
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      // window.location.href = link;
+      window.location.href = link;
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
@@ -75,9 +77,9 @@ const InstallButton: React.FC<Props> = ({ link }) => {
       handleBeforeInstallPrompt as EventListener
     );
 
-    // window.addEventListener("appinstalled", () => {
-    //   setIsPWAActive(true);
-    // });
+    window.addEventListener("appinstalled", () => {
+      setIsPWAActive(true);
+    });
 
     return () => {
       window.removeEventListener(
@@ -102,9 +104,13 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     }
   };
 
-  return !fakeInstall ? (
+  const openLink = () => {
+    navigate(link);
+  };
+
+  return isPWAActive && !fakeInstall ? (
     <a href={link}>
-      <CustomButton fullWidth>
+      <CustomButton fullWidth onClick={openLink}>
         {intl.formatMessage({ id: "open" })}
       </CustomButton>
     </a>
