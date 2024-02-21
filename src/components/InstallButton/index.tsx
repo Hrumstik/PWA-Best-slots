@@ -55,13 +55,14 @@ const InstallButton: React.FC<Props> = ({ link }) => {
   const intl = useIntl();
 
   useEffect(() => {
+    console.log(isPWAActive);
     const isPWAActiveted = window.matchMedia(
-      "(display-mode: minimal-ui)"
+      "(display-mode: standalone)"
     ).matches;
 
     if (isPWAActiveted) {
       setIsPWAActive(true);
-      window.location.href = link;
+      // window.location.href = link;
     }
 
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
@@ -74,9 +75,9 @@ const InstallButton: React.FC<Props> = ({ link }) => {
       handleBeforeInstallPrompt as EventListener
     );
 
-    window.addEventListener("appinstalled", () => {
-      setIsPWAActive(true);
-    });
+    // window.addEventListener("appinstalled", () => {
+    //   setIsPWAActive(true);
+    // });
 
     return () => {
       window.removeEventListener(
@@ -101,7 +102,7 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     }
   };
 
-  return isPWAActive && !fakeInstall ? (
+  return !fakeInstall ? (
     <a href={link}>
       <CustomButton fullWidth>
         {intl.formatMessage({ id: "open" })}
