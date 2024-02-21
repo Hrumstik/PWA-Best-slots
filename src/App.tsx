@@ -94,7 +94,7 @@ export default function Index() {
 
   useEffect(() => {
     const isPWAActiveted = window.matchMedia(
-      "(display-mode: minimal-ui)"
+      "(display-mode: standalone)"
     ).matches;
 
     if (isPWAActiveted) {
