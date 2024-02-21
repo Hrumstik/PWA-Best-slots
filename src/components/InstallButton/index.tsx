@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
@@ -53,7 +52,6 @@ const InstallButton: React.FC<Props> = ({ link }) => {
     (state: RootState) => state.install.fakeInstall
   );
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const intl = useIntl();
 
@@ -105,15 +103,13 @@ const InstallButton: React.FC<Props> = ({ link }) => {
   };
 
   const openLink = () => {
-    navigate(link);
+    window.open(link, "_blank");
   };
 
   return isPWAActive && !fakeInstall ? (
-    <a href={link}>
-      <CustomButton fullWidth onClick={openLink}>
-        {intl.formatMessage({ id: "open" })}
-      </CustomButton>
-    </a>
+    <CustomButton fullWidth onClick={openLink}>
+      {intl.formatMessage({ id: "open" })}
+    </CustomButton>
   ) : (
     <AnimatedButton
       fullWidth
