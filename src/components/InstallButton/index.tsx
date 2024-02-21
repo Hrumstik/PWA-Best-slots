@@ -47,7 +47,7 @@ const AnimatedButton = styled<any>(motion(Button), {
 const InstallButton: React.FC<Props> = ({ appLink, pwaLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [isPWAActive, setIsPWAActive] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(true);
+  const [isInstalled, setIsInstalled] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
