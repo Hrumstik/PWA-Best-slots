@@ -61,9 +61,10 @@ function AppLogo() {
           </LogoInProgressContainer>
 
           <CircularProgress
+            variant="determinate"
+            value={installProgress}
             disableShrink
             size={56}
-            value={installProgress}
             thickness={1}
             sx={{
               position: "absolute",
