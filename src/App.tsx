@@ -58,7 +58,7 @@ const reviewsData = [
     name: "Matthew",
     avatarName: "M",
     color: "deepPurple",
-    stars: 5,
+    stars: 3,
     reviewKey: "Matthew",
     date: "18/02/2024",
   },
@@ -81,11 +81,11 @@ const reviewsData = [
 ];
 
 const ratingsData = [
-  { stars: 5, rating: 95 },
-  { stars: 4, rating: 1 },
+  { stars: 5, rating: 70 },
+  { stars: 4, rating: 25 },
   { stars: 3, rating: 1 },
   { stars: 2, rating: 1 },
-  { stars: 1, rating: 1 },
+  { stars: 1, rating: 3 },
 ];
 
 export default function Index() {
@@ -133,7 +133,7 @@ export default function Index() {
         <AppStatisticsCard>
           <AppStatisticsCardItem>
             <AppStatisticsCardItemTitle>
-              4,9 <StarIcon fontSize="inherit" />
+              4,8 <StarIcon fontSize="inherit" />
             </AppStatisticsCardItemTitle>
             <AppStatisticsCardItemContent>
               {intl.formatMessage({ id: "reviews" })}
@@ -174,7 +174,7 @@ export default function Index() {
           <OpenSectionButton string="ratingAndReviews" />
         </AboutGameContainer>
         <AppRatesAndReviewsContainer>
-          <AppRateContainer>4.9</AppRateContainer>
+          <AppRateContainer>4,8</AppRateContainer>
           <AppStarsContainer>
             <Rating
               name="half-rating-read"

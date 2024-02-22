@@ -407,3 +407,15 @@ export const AppImg = styled.img`
   max-height: 100%;
   object-fit: contain;
 `;
+
+export const ViewHeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 3.5em;
+  z-index: 1000;
+`;
+
+export const AboutAppContainer = styled.div`
+  min-height: 100vh;
+`;
