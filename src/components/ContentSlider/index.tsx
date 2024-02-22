@@ -1,4 +1,7 @@
 import Slider from "react-slick";
+import firstScreen from "../../../public/images/firstScreen.webp";
+import secondScreen from "../../../public/images/secondScreen.webp";
+import thirdScreen from "../../../public/images/trirdScreen.webp";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
@@ -36,7 +39,7 @@ export default function ContentSlider() {
           <ScreenWrapperItem>
             <ScreenContainer>
               <img
-                src="/images/firstScreen.png"
+                src={firstScreen}
                 width={1080}
                 height={1920}
                 alt="First screen"
@@ -53,7 +56,7 @@ export default function ContentSlider() {
           <ScreenWrapperItem>
             <ScreenContainer>
               <img
-                src="/images/secondScreen.png"
+                src={secondScreen}
                 width={1080}
                 height={1920}
                 style={{
@@ -70,7 +73,7 @@ export default function ContentSlider() {
           <ScreenWrapperItem>
             <ScreenContainer>
               <img
-                src="/images/trirdScreen.png"
+                src={thirdScreen}
                 width={1080}
                 height={1920}
                 style={{
