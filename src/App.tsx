@@ -94,7 +94,6 @@ export default function Index() {
   );
   const intl = useIntl();
   const [isPWAActive, setIsPWAActive] = useState(false);
-
   useEffect(() => {
     const isPWAActiveted = window.matchMedia(
       "(display-mode: standalone)"
@@ -134,7 +133,7 @@ export default function Index() {
         <AppStatisticsCard>
           <AppStatisticsCardItem>
             <AppStatisticsCardItemTitle>
-              5,0 <StarIcon fontSize="inherit" />
+              4,9 <StarIcon fontSize="inherit" />
             </AppStatisticsCardItemTitle>
             <AppStatisticsCardItemContent>
               {intl.formatMessage({ id: "reviews" })}

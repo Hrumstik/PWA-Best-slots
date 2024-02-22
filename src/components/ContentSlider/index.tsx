@@ -83,23 +83,6 @@ export default function ContentSlider() {
               />
             </ScreenContainer>
           </ScreenWrapperItem>
-
-          <ScreenWrapperItem>
-            <ScreenContainer>
-              <img
-                src="/images/fourthScreen.png"
-                width={1080}
-                height={1920}
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "8px",
-                }}
-                alt="First screen"
-              />
-            </ScreenContainer>
-          </ScreenWrapperItem>
         </Slider>
       </div>
     </SliderContainer>
