@@ -141,7 +141,7 @@ export default function Index() {
           </AppStatisticsCardItem>
           <VerticalDivider orientation="vertical" variant="inset" flexItem />
           <AppStatisticsCardItem>
-            <AppStatisticsCardItemTitle>1000 +</AppStatisticsCardItemTitle>
+            <AppStatisticsCardItemTitle>980К+</AppStatisticsCardItemTitle>
             <AppStatisticsCardItemContent>
               {intl.formatMessage({ id: "donwloads" })}
             </AppStatisticsCardItemContent>
