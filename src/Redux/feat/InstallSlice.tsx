@@ -4,12 +4,14 @@ export interface InstalState {
   isInstalling: boolean;
   fakeInstall: boolean;
   isInstalled: boolean;
+  installProgress: string;
 }
 
 const initialState: InstalState = {
   isInstalling: false,
   fakeInstall: false,
   isInstalled: false,
+  installProgress: "Waiting...",
 };
 
 export const instalSlice = createSlice({
@@ -31,6 +33,9 @@ export const instalSlice = createSlice({
     setIsInstalled: (state) => {
       state.isInstalled = true;
     },
+    setInstallProgress: (state, action) => {
+      state.installProgress = action.payload + "% of 15 MB";
+    },
   },
 });
 
@@ -40,6 +45,7 @@ export const {
   startFakeInstall,
   stopFakeInstall,
   setIsInstalled,
+  setInstallProgress,
 } = instalSlice.actions;
 
 export default instalSlice.reducer;

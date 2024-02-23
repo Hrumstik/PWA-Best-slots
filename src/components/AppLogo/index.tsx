@@ -9,14 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store/store";
 import { useEffect, useState } from "react";
 import {
+  setInstallProgress,
   setIsInstalled,
   stopFakeInstall,
   stopInstalling,
 } from "../../Redux/feat/InstallSlice";
 
 function AppLogo() {
-  const [installProgress, setInstallProgress] = useState(0);
-
+  const [installProgressNumber, setInstallProgressNumber] = useState(0);
   const dispatch = useDispatch();
 
   const isInstalling = useSelector(
@@ -36,17 +36,19 @@ function AppLogo() {
         const randomIncrement = Math.random() * (30 - 10) + 10;
         progress += randomIncrement;
         progress = Math.min(progress, 100);
+        progress = Math.floor(progress);
 
-        setInstallProgress(progress);
+        dispatch(setInstallProgress(progress));
+        setInstallProgressNumber(progress);
 
         const elapsedTime = (Date.now() - startTime) / 1000;
 
-        if (progress >= 100 && elapsedTime >= 10) {
+        if (progress >= 100 && elapsedTime >= 12) {
           clearInterval(interval);
-          setInstallProgress(0);
           dispatch(stopFakeInstall());
           dispatch(stopInstalling());
           dispatch(setIsInstalled());
+          setInstallProgress(0);
         }
       }, 1000);
     };
@@ -70,7 +72,7 @@ function AppLogo() {
 
           <CircularProgress
             variant="determinate"
-            value={installProgress}
+            value={installProgressNumber}
             disableShrink
             size={56}
             thickness={3}

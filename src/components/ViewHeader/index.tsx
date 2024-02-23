@@ -1,13 +1,37 @@
 import { IconButton } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { ViewHeaderContainer } from "../styles";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {
+  HeaderInfoContainer,
+  HeaderInfoText,
+  HeaderInfoTitle,
+  LogoSection,
+  ViewHeaderContainer,
+} from "../styles";
+import { useIntl } from "react-intl";
+import { Dispatch, SetStateAction } from "react";
 
-export default function ViewHeader() {
-  return (
-    <IconButton>
-      <ViewHeaderContainer>
-        <ArrowForwardIcon sx={{ color: "rgb(32, 33, 36)" }} />
-      </ViewHeaderContainer>
-    </IconButton>
-  );
+interface Props {
+  setView: Dispatch<SetStateAction<string>>;
 }
+
+const ViewHeader: React.FC<Props> = ({ setView }) => {
+  const intl = useIntl();
+
+  const handleClick = () => {
+    setView("main");
+  };
+  return (
+    <ViewHeaderContainer>
+      <IconButton size="large" onClick={handleClick}>
+        <ArrowBackIcon sx={{ color: "rgb(32, 33, 36)", fontSize: 24 }} />
+      </IconButton>
+      <LogoSection src="/icon.png" />
+      <HeaderInfoContainer>
+        <HeaderInfoTitle>{intl.formatMessage({ id: "name" })}</HeaderInfoTitle>
+        <HeaderInfoText>{intl.formatMessage({ id: "details" })}</HeaderInfoText>
+      </HeaderInfoContainer>
+    </ViewHeaderContainer>
+  );
+};
+
+export default ViewHeader;

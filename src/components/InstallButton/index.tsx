@@ -77,7 +77,6 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   const installPWA = async () => {
     dispatch(install());
     if (installPromptRef.current) {
-      dispatch(install());
       await installPromptRef.current.prompt();
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
@@ -100,7 +99,7 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   ) : (
     <AnimatedButton
       fullWidth
-      onClick={!isInstalling && installPWA}
+      onClick={!isInstalling ? installPWA : undefined}
       $isInstalling={isInstalling}
       disabled={isInstalling}
     >

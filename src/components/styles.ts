@@ -9,6 +9,7 @@ export const colors = {
   background: "#e3e3e3",
   buttonBackground: "#0069d9",
   disabledText: "rgba(0, 0, 0, 0.26)",
+  separator: "#dadce0",
 };
 
 export const MainContainer = styled.main`
@@ -258,6 +259,7 @@ export const AppRatesAndSection = styled.section`
   // @media (max-width: 480px) {
   margin-left: 24px;
   margin-right: 24px;
+  padding-top: 16px;
   overflow: visible;
   // }
 `;
@@ -412,10 +414,143 @@ export const ViewHeaderContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  height: 3.5em;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 3.5em;
+  background-color: #fff;
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: ${colors.separator};
+    position: absolute;
+    bottom: 0;
+  }
 `;
 
 export const AboutAppContainer = styled.div`
   min-height: 100vh;
+`;
+
+export const LogoSection = styled.img`
+  height: calc(100% - 1.5em);
+  margin-right: 1.25em;
+  border-radius: 0.5em;
+  aspect-ratio: 1/1;
+`;
+
+export const HeaderInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+`;
+
+export const HeaderInfoTitle = styled.span`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${colors.mainText};
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1.3rem;
+  font-size: 0.8rem;
+`;
+
+export const MainContentSection = styled.section`
+  padding-top: 3.5em;
+  margin-left: 24px;
+  margin-right: 24px;
+`;
+
+export const HeaderInfoText = styled.span`
+  font-weight: 400;
+  font-size: 0.8em;
+  color: ${colors.secondaryText};
+`;
+
+export const AboutAppSectionTitle = styled.div`
+  font-size: 1.1rem;
+  color: ${colors.mainText};
+  font-family: "Roboto", sans-serif;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+`;
+
+export const AboutGameTextContainer = styled.div`
+  font-size: 1rem;
+  color: ${colors.mainText};
+  font-family: "Roboto", sans-serif;
+  padding-bottom: 16px;
+  white-space: pre-wrap;
+  position: relative;
+`;
+
+export const HorizontalDivider = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.separator};
+`;
+
+export const Section = styled.section`
+  margin-left: 24px;
+  margin-right: 24px;
+`;
+
+export const AppInfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 2em 0;
+}
+`;
+
+export const AppInfoTitle = styled.div`
+  font-size: 1.1rem;
+  color: ${colors.mainText};
+  font-family: "Roboto", sans-serif;
+  padding-top: 16px;
+`;
+
+export const AppInfoRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const AppInfoRowText = styled.span`
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+`;
+
+export const InstallationProgessWrapper = styled.div`
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: "Roboto", sans-serif;
+`;
+
+export const PercentagesMessage = styled.div`
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  color: ${colors.mainText};
+`;
+
+export const VerifiedConteiner = styled.div`
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  line-height: 0.8rem;
+  font-size: 0.675rem;
+  color: ${colors.secondaryText};
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `;
