@@ -2,6 +2,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
+import mixpanel from "mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
@@ -61,20 +62,28 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
       installPromptRef.current = e;
     };
 
+    const handleAppInstalled = () => {
+      mixpanel.track("landing_callback_pwa_installed");
+    };
+
     window.addEventListener(
       "beforeinstallprompt",
       handleBeforeInstallPrompt as EventListener
     );
+
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
       window.removeEventListener(
         "beforeinstallprompt",
         handleBeforeInstallPrompt as EventListener
       );
+      window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, [appLink, dispatch, setIsPWAActive]);
 
   const installPWA = async () => {
+    mixpanel.track("landing_btn_install_pressed");
     dispatch(install());
     if (installPromptRef.current) {
       await installPromptRef.current.prompt();
@@ -89,6 +98,7 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
   };
 
   const openLink = () => {
+    mixpanel.track("landing_btn_open_pressed");
     window.open(appLink, "_blank");
   };
 

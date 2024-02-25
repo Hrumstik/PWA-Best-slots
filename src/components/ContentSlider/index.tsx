@@ -1,12 +1,19 @@
 import Slider from "react-slick";
-import firstScreen from "../../../public/images/firstScreen.webp";
-import secondScreen from "../../../public/images/secondScreen.webp";
-import thirdScreen from "../../../public/images/trirdScreen.webp";
+import mixpanel from "mixpanel-browser";
+import firstScreen from "../../images/firstScreen.webp";
+import secondScreen from "../../images/secondScreen.webp";
+import thirdScreen from "../../images/thirdScreen.webp";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
 
 export default function ContentSlider() {
+  const handleScreenshotClick = (screenName: string) => {
+    mixpanel.track("landing_screenshots_tapped", {
+      "Screen Name": screenName,
+    });
+  };
+
   const settings = {
     dots: false,
     infinite: false,
@@ -36,7 +43,9 @@ export default function ContentSlider() {
     <SliderContainer>
       <div className="slider-container">
         <Slider {...settings}>
-          <ScreenWrapperItem>
+          <ScreenWrapperItem
+            onClick={() => handleScreenshotClick("First Screen")}
+          >
             <ScreenContainer>
               <img
                 src={firstScreen}
@@ -53,7 +62,9 @@ export default function ContentSlider() {
             </ScreenContainer>
           </ScreenWrapperItem>
 
-          <ScreenWrapperItem>
+          <ScreenWrapperItem
+            onClick={() => handleScreenshotClick("Second Screen")}
+          >
             <ScreenContainer>
               <img
                 src={secondScreen}
@@ -70,7 +81,9 @@ export default function ContentSlider() {
             </ScreenContainer>
           </ScreenWrapperItem>
 
-          <ScreenWrapperItem>
+          <ScreenWrapperItem
+            onClick={() => handleScreenshotClick("Third Screen")}
+          >
             <ScreenContainer>
               <img
                 src={thirdScreen}

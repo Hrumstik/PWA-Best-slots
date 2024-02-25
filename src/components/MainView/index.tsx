@@ -138,7 +138,12 @@ const MainView: React.FC<Props> = ({ setIsPWAActive, setView }) => {
         <InstallButton setIsPWAActive={setIsPWAActive} appLink="/" />
         <ContentSlider />
         <AboutGameContainer>
-          <OpenSectionButton id="about" view="about" setView={setView} />
+          <OpenSectionButton
+            mixPanelEvent="landing_btn_aboutApp_pressed"
+            id="about"
+            view="about"
+            setView={setView}
+          />
         </AboutGameContainer>
         <ShortDescriptionWrapper>
           {intl.formatMessage({ id: "shortDescription" })}

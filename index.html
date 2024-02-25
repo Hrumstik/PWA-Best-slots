@@ -3,9 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="preload" href="/public/images/firstScreen.webp" as="image" />
-    <link rel="preload" href="/public/images/secondScreen.webp" as="image" />
-    <link rel="preload" href="/public/images/trirdScreen.webp" as="image" />
     <link
       rel="apple-touch-icon"
       href="/apple-touch-icon-180x180.png"
@@ -30,7 +27,7 @@
       var searchParams = new URLSearchParams(window.location.search);
       return searchParams.get(param);
     }
-    var pixelId = getQueryParam("idpixel"); // 'idpixel' это имя параметра в вашем URL
+    var pixelId = getQueryParam("idpixel");
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function () {

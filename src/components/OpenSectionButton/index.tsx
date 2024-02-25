@@ -1,19 +1,27 @@
+import React, { Dispatch, SetStateAction } from "react";
+import { useIntl } from "react-intl";
+import mixpanel from "mixpanel-browser";
 import { Button, Grid } from "@mui/material";
 import { ButtonTitle } from "../styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useIntl } from "react-intl";
-import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
   id: string;
   view: string;
   setView: Dispatch<SetStateAction<string>>;
+  mixPanelEvent: string;
 }
 
-const OpenSectionButton: React.FC<Props> = ({ id, view, setView }) => {
+const OpenSectionButton: React.FC<Props> = ({
+  id,
+  view,
+  setView,
+  mixPanelEvent,
+}) => {
   const intl = useIntl();
 
   const handleSetView = () => {
+    mixpanel.track(mixPanelEvent);
     setView(view);
   };
 

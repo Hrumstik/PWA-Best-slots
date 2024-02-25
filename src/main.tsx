@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { store } from "./Redux/store/store.tsx";
 import { Provider } from "react-redux";
 import { IntlProvider } from "react-intl";
+import mixpanel from "mixpanel-browser";
 import English from "./Locales/English.json";
 import "normalize.css";
 
@@ -21,6 +22,12 @@ if ("serviceWorker" in navigator) {
 }
 
 const userLocale = navigator.language;
+
+mixpanel.init("fd83b7f99d2ae16871a7219fe717bd8e", {
+  debug: true,
+  track_pageview: true,
+  persistence: "localStorage",
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
