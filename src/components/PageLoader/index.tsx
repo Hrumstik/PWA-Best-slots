@@ -1,17 +1,15 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useEffect } from "react";
+import { colors } from "../styles";
 
 interface Props {
-  isPWAActiveted: boolean;
   pwaLink: string;
 }
 
-const PageLoader: React.FC<Props> = ({ isPWAActiveted, pwaLink }) => {
+const PageLoader: React.FC<Props> = ({ pwaLink }) => {
   useEffect(() => {
-    if (isPWAActiveted) {
-      window.location.href = pwaLink;
-    }
+    window.location.href = pwaLink;
   });
   return (
     <Box
@@ -20,7 +18,11 @@ const PageLoader: React.FC<Props> = ({ isPWAActiveted, pwaLink }) => {
       alignItems="center"
       minHeight="100vh"
     >
-      <CircularProgress />
+      <CircularProgress
+        sx={{ color: `${colors.primary}` }}
+        size={100}
+        thickness={5}
+      />
     </Box>
   );
 };

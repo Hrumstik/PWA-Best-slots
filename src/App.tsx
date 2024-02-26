@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import mixpanel from "mixpanel-browser";
-import PageLoader from "./components/PageLoader";
 import MainView from "./components/MainView";
 import AboutView from "./components/AboutView";
+import PwaView from "./components/PwaView";
 
 export default function Index() {
   const [pwaLink, setPwaLink] = useState("");
@@ -51,18 +51,12 @@ export default function Index() {
 
   switch (view) {
     case "main":
-      currentView = (
-        <MainView setIsPWAActive={setIsPWAActive} setView={setView} />
-      );
+      currentView = <MainView setView={setView} />;
       break;
     case "about":
       currentView = <AboutView setView={setView} />;
       break;
   }
 
-  return isPWAActive ? (
-    <PageLoader isPWAActiveted={isPWAActive} pwaLink={pwaLink} />
-  ) : (
-    <>{currentView}</>
-  );
+  return isPWAActive ? <PwaView pwaLink={pwaLink} /> : <>{currentView}</>;
 }

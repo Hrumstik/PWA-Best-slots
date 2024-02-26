@@ -37,7 +37,6 @@ import Review from "../Review";
 import InstallationProgess from "../InstallationProgress";
 
 interface Props {
-  setIsPWAActive: Dispatch<SetStateAction<boolean>>;
   setView: Dispatch<SetStateAction<string>>;
 }
 
@@ -92,7 +91,7 @@ const ratingsData = [
   { stars: 1, rating: 3 },
 ];
 
-const MainView: React.FC<Props> = ({ setIsPWAActive, setView }) => {
+const MainView: React.FC<Props> = ({ setView }) => {
   const intl = useIntl();
 
   return (
@@ -135,7 +134,7 @@ const MainView: React.FC<Props> = ({ setIsPWAActive, setView }) => {
             </AppStatisticsCardItemContent>
           </AppStatisticsCardItem>
         </AppStatisticsCard>
-        <InstallButton setIsPWAActive={setIsPWAActive} appLink="/" />
+        <InstallButton appLink="/" />
         <ContentSlider />
         <AboutGameContainer>
           <OpenSectionButton

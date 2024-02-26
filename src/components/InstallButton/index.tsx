@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import mixpanel from "mixpanel-browser";
@@ -17,7 +17,6 @@ interface BeforeInstallPromptEvent extends Event {
 
 interface Props {
   appLink: string;
-  setIsPWAActive: Dispatch<SetStateAction<boolean>>;
 }
 
 const AnimatedButton = styled<any>(motion(Button), {
@@ -44,7 +43,7 @@ const AnimatedButton = styled<any>(motion(Button), {
   }
 `;
 
-const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
+const InstallButton: React.FC<Props> = ({ appLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
@@ -80,7 +79,7 @@ const InstallButton: React.FC<Props> = ({ appLink, setIsPWAActive }) => {
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, [appLink, dispatch, setIsPWAActive]);
+  }, [appLink, dispatch]);
 
   const installPWA = async () => {
     mixpanel.track("landing_btn_install_pressed");
