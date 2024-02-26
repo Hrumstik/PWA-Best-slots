@@ -47,7 +47,7 @@ const reviewsData = [
     color: "blueGrey",
     stars: 5,
     reviewKey: "Watson",
-    date: "19/02/2024",
+    date: "25/02/2024",
     src: "https://play-lh.googleusercontent.com/a-/ALV-UjW11Tdl38KLzy57nes-0mu8sD1IU104A94FXbdXiwOvmCc=s32",
   },
   {
@@ -56,7 +56,7 @@ const reviewsData = [
     color: "blue",
     stars: 5,
     reviewKey: "Sheff816",
-    date: "20/02/2024",
+    date: "24/02/2024",
   },
   {
     name: "Matthew",
@@ -64,7 +64,7 @@ const reviewsData = [
     color: "deepPurple",
     stars: 3,
     reviewKey: "Matthew",
-    date: "18/02/2024",
+    date: "20/02/2024",
     src: "https://play-lh.googleusercontent.com/a-/ALV-UjU1J70EC47oO4pgCkbakP6NecmMx_1DGF7Ce6rn0kVKVm4=s32",
   },
 ];
