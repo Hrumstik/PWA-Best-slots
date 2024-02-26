@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import mixpanel from "mixpanel-browser";
 import { CustomButton } from "../styles";
 import { useIntl } from "react-intl";
 
@@ -11,6 +12,7 @@ const StartAgainView: React.FC<Props> = ({ pwaLink }) => {
   const intl = useIntl();
 
   const handleClick = () => {
+    mixpanel.track("pwa_splashScreen_btn_startAgain");
     window.location.href = pwaLink;
   };
 
