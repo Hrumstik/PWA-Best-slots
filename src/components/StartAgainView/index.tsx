@@ -26,7 +26,7 @@ const StartAgainView: React.FC<Props> = ({ pwaLink }) => {
         alignItems="center"
         style={{ minHeight: "100vh" }}
       >
-        <Grid item xs={3}>
+        <Grid item xs={6}>
           <CustomButton fullWidth variant="contained" onClick={handleClick}>
             {intl.formatMessage({ id: "startAgain" })}
           </CustomButton>
