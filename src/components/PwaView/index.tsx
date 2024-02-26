@@ -19,7 +19,7 @@ const PwaView: React.FC<Props> = ({ pwaLink }) => {
 
     const timer = setTimeout(() => {
       setView("button");
-    }, 10000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
