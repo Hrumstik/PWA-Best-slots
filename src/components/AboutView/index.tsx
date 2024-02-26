@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ViewHeader from "../ViewHeader";
 import {
-  AboutAppContainer,
+  ViewAppContainer,
   AboutAppSectionTitle,
   AboutGameTextContainer,
   AppInfoContainer,
@@ -23,8 +23,8 @@ interface Props {
 const AboutView: React.FC<Props> = ({ setView }) => {
   const intl = useIntl();
   return (
-    <AboutAppContainer>
-      <ViewHeader setView={setView}></ViewHeader>
+    <ViewAppContainer>
+      <ViewHeader id="details" setView={setView} />
       <MainContentSection>
         <AboutAppSectionTitle>
           {intl.formatMessage({ id: "about" })}
@@ -124,7 +124,7 @@ const AboutView: React.FC<Props> = ({ setView }) => {
           </AppInfoRow>
         </AppInfoContainer>
       </Section>
-    </AboutAppContainer>
+    </ViewAppContainer>
   );
 };
 

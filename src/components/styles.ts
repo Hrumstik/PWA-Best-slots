@@ -259,7 +259,6 @@ export const AppRatesAndSection = styled.section`
   // @media (max-width: 480px) {
   margin-left: 24px;
   margin-right: 24px;
-  padding-top: 16px;
   overflow: visible;
   // }
 `;
@@ -274,7 +273,6 @@ export const AppRatesAndReviewsContainer = styled.div`
     "rating-stars rating-right"
     "rating-count rating-right";
   grid-column-gap: 2em;
-  margin-bottom: 32px;
   // }
 `;
 
@@ -337,6 +335,7 @@ export const RatingChart = styled.div<any>`
 `;
 
 export const ReviewsSection = styled.section`
+  margin-top: 32px;
   margin-left: 24px;
   margin-right: 24px;
   margin-bottom: 32px;
@@ -431,7 +430,7 @@ export const ViewHeaderContainer = styled.div`
   }
 `;
 
-export const AboutAppContainer = styled.div`
+export const ViewAppContainer = styled.div`
   min-height: 100vh;
 `;
 
@@ -553,4 +552,18 @@ export const VerifiedConteiner = styled.div`
   display: flex;
   align-items: center;
   gap: 2px;
+`;
+
+export const RatingsAndReviewsWrapper = styled.div`
+  padding-top: 3.5em;
+  margin-left: 24px;
+  margin-right: 24px;
+`;
+
+export const RatingsAndReviewsSection = styled.section`
+  margin-top: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
 `;

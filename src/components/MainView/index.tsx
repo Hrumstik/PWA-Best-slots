@@ -67,29 +67,12 @@ const reviewsData = [
     date: "18/02/2024",
     src: "https://play-lh.googleusercontent.com/a-/ALV-UjU1J70EC47oO4pgCkbakP6NecmMx_1DGF7Ce6rn0kVKVm4=s32",
   },
-  {
-    name: "MassesOfPalpur",
-    avatarName: "M",
-    color: "brown",
-    stars: 5,
-    reviewKey: "MassesOfPalpur",
-    date: "19/02/2024",
-    src: "https://play-lh.googleusercontent.com/a-/ALV-UjXFH4QipeLANjgFHgPvyv5vrZRxSTSAXBVLx3oCvup6ETA=s32",
-  },
-  {
-    name: "Opposum",
-    avatarName: "O",
-    color: "green",
-    stars: 5,
-    reviewKey: "Opposum",
-    date: "20/02/2024",
-  },
 ];
 
 const ratingsData = [
   { stars: 5, rating: 70 },
-  { stars: 4, rating: 25 },
-  { stars: 3, rating: 1 },
+  { stars: 4, rating: 15 },
+  { stars: 3, rating: 10 },
   { stars: 2, rating: 1 },
   { stars: 1, rating: 3 },
 ];
@@ -112,7 +95,7 @@ const MainView: React.FC<Props> = ({ setView }) => {
         <AppStatisticsCard>
           <AppStatisticsCardItem>
             <AppStatisticsCardItemTitle>
-              4,8 <StarIcon fontSize="inherit" />
+              4,6 <StarIcon fontSize="inherit" />
             </AppStatisticsCardItemTitle>
             <AppStatisticsCardItemContent>
               {intl.formatMessage({ id: "reviews" })}
@@ -151,10 +134,18 @@ const MainView: React.FC<Props> = ({ setView }) => {
           {intl.formatMessage({ id: "shortDescription" })}
         </ShortDescriptionWrapper>
         <ChipSlider />
+        <AboutGameContainer>
+          <OpenSectionButton
+            mixPanelEvent="landing_btn_ratingsApp_pressed"
+            id="ratingsAndReviews"
+            view="reviews"
+            setView={setView}
+          />
+        </AboutGameContainer>
       </AppDescriptionSection>
       <AppRatesAndSection>
         <AppRatesAndReviewsContainer>
-          <AppRateContainer>4,8</AppRateContainer>
+          <AppRateContainer>4,6</AppRateContainer>
           <AppStarsContainer>
             <Rating
               name="half-rating-read"

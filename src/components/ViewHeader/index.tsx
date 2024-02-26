@@ -12,9 +12,10 @@ import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   setView: Dispatch<SetStateAction<string>>;
+  id: string;
 }
 
-const ViewHeader: React.FC<Props> = ({ setView }) => {
+const ViewHeader: React.FC<Props> = ({ setView, id }) => {
   const intl = useIntl();
 
   const handleClick = () => {
@@ -28,7 +29,7 @@ const ViewHeader: React.FC<Props> = ({ setView }) => {
       <LogoSection src="/icon.png" />
       <HeaderInfoContainer>
         <HeaderInfoTitle>{intl.formatMessage({ id: "name" })}</HeaderInfoTitle>
-        <HeaderInfoText>{intl.formatMessage({ id: "details" })}</HeaderInfoText>
+        <HeaderInfoText>{intl.formatMessage({ id })}</HeaderInfoText>
       </HeaderInfoContainer>
     </ViewHeaderContainer>
   );

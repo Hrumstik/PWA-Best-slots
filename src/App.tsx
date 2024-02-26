@@ -4,6 +4,7 @@ import mixpanel from "mixpanel-browser";
 import MainView from "./components/MainView";
 import AboutView from "./components/AboutView";
 import PwaView from "./components/PwaView";
+import ReviewsView from "./components/ReviewsView";
 
 export default function Index() {
   const [pwaLink, setPwaLink] = useState("");
@@ -56,6 +57,8 @@ export default function Index() {
     case "about":
       currentView = <AboutView setView={setView} />;
       break;
+    case "reviews":
+      currentView = <ReviewsView setView={setView} />;
   }
 
   return isPWAActive ? <PwaView pwaLink={pwaLink} /> : <>{currentView}</>;
