@@ -48,6 +48,7 @@ const reviewsData = [
     stars: 5,
     reviewKey: "Watson",
     date: "19/02/2024",
+    src: "https://play-lh.googleusercontent.com/a-/ALV-UjW11Tdl38KLzy57nes-0mu8sD1IU104A94FXbdXiwOvmCc=s32",
   },
   {
     name: "Sheff816",
@@ -64,6 +65,7 @@ const reviewsData = [
     stars: 3,
     reviewKey: "Matthew",
     date: "18/02/2024",
+    src: "https://play-lh.googleusercontent.com/a-/ALV-UjU1J70EC47oO4pgCkbakP6NecmMx_1DGF7Ce6rn0kVKVm4=s32",
   },
   {
     name: "MassesOfPalpur",
@@ -72,6 +74,7 @@ const reviewsData = [
     stars: 5,
     reviewKey: "MassesOfPalpur",
     date: "19/02/2024",
+    src: "https://play-lh.googleusercontent.com/a-/ALV-UjXFH4QipeLANjgFHgPvyv5vrZRxSTSAXBVLx3oCvup6ETA=s32",
   },
   {
     name: "Opposum",
@@ -175,6 +178,7 @@ const MainView: React.FC<Props> = ({ setView }) => {
       <ReviewsSection>
         {reviewsData.map((review) => (
           <Review
+            src={review.src ? review.src : undefined}
             key={review.name}
             name={review.name}
             avatarName={review.avatarName}

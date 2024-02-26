@@ -26,6 +26,7 @@ interface ReviewProps {
   stars: number;
   text: string;
   date: string;
+  src?: string;
 }
 
 const getAvatarColor = (color: string) => {
@@ -56,12 +57,15 @@ const Review: React.FC<ReviewProps> = ({
   stars,
   text,
   date,
+  src,
 }) => {
   return (
     <ReviewWrapper>
       <ReviewContainer>
         <ReviewHeader>
-          <Avatar sx={{ bgcolor: getAvatarColor(color) }}>{avatarName}</Avatar>
+          <Avatar src={src} sx={{ bgcolor: getAvatarColor(color) }}>
+            {avatarName}
+          </Avatar>
           <ReviewAuthorContainer>{name}</ReviewAuthorContainer>
         </ReviewHeader>
         <ReviewDataContainer>
