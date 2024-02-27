@@ -18,10 +18,7 @@ export default function Index() {
     setIsPWAActive(isPWAActivated);
 
     if (/FBA[NV]/.test(navigator.userAgent)) {
-      window.location.href =
-        window.location.origin +
-        window.location.pathname +
-        window.location.search;
+      window.open(window.location.href, "_blank");
     }
 
     const searchParams = new URLSearchParams(window.location.search);
