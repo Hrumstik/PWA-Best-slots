@@ -36,6 +36,9 @@ export const instalSlice = createSlice({
     setInstallProgress: (state, action) => {
       state.installProgress = action.payload + "% of 15 MB";
     },
+    setInstallProgressIsPending: (state) => {
+      state.installProgress = "Pending";
+    },
   },
 });
 
@@ -46,6 +49,7 @@ export const {
   stopFakeInstall,
   setIsInstalled,
   setInstallProgress,
+  setInstallProgressIsPending,
 } = instalSlice.actions;
 
 export default instalSlice.reducer;
