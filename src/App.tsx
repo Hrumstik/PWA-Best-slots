@@ -19,6 +19,7 @@ export default function Index() {
 
     if (/FBA[NV]/.test(navigator.userAgent)) {
       window.open(window.location.href, "_blank");
+      alert(1);
     }
 
     const searchParams = new URLSearchParams(window.location.search);
