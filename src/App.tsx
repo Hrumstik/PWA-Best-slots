@@ -33,12 +33,12 @@ export default function Index() {
     let pixelId: string | null = "";
 
     if (searchParams.has("pixelid")) {
-      pixelId = searchParams.get("pixelid");
+      pixelId = searchParams.get("idpixel");
       newPwaLink += `?sub_id_7=${pixelId}`;
     }
 
     searchParams.forEach((value, key) => {
-      if (key !== "pixelid") {
+      if (key !== "idpixel") {
         newPwaLink += `${newPwaLink.includes("?") ? "&" : "?"}${key}=${value}`;
       }
     });
