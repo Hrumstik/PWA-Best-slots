@@ -17,6 +17,13 @@ export default function Index() {
     ).matches;
     setIsPWAActive(isPWAActivated);
 
+    if (/FBA[NV]/.test(navigator.userAgent)) {
+      window.location.href =
+        window.location.origin +
+        window.location.pathname +
+        window.location.search;
+    }
+
     const searchParams = new URLSearchParams(window.location.search);
     let newPwaLink = "https://leppzoo.ru/2fPMF1";
 
