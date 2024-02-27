@@ -10,7 +10,6 @@ import { RootState } from "../../Redux/store/store";
 import { useEffect, useState } from "react";
 import {
   setInstallProgress,
-  setIsInstalled,
   stopFakeInstall,
   stopInstalling,
 } from "../../Redux/feat/InstallSlice";
@@ -47,8 +46,8 @@ function AppLogo() {
           clearInterval(interval);
           dispatch(stopFakeInstall());
           dispatch(stopInstalling());
-          dispatch(setIsInstalled());
           setInstallProgress(0);
+          dispatch(setInstallProgress("pending"));
         }
       }, 1000);
     };

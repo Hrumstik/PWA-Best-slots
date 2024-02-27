@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import mixpanel from "mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
-import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
+import {
+  install,
+  setIsInstalled,
+  startFakeInstall,
+} from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
@@ -62,6 +66,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     };
 
     const handleAppInstalled = () => {
+      dispatch(setIsInstalled());
       mixpanel.track("landing_callback_pwa_installed");
     };
 
