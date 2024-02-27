@@ -32,7 +32,7 @@ export default function Index() {
     let newPwaLink = "https://leppzoo.ru/2fPMF1";
     let pixelId: string | null = "";
 
-    if (searchParams.has("pixelid")) {
+    if (searchParams.has("idpixel")) {
       pixelId = searchParams.get("idpixel");
       newPwaLink += `?sub_id_7=${pixelId}`;
     }
