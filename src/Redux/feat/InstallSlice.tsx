@@ -37,7 +37,7 @@ export const instalSlice = createSlice({
       state.installProgress = action.payload + "% of 15 MB";
     },
     setInstallProgressIsPending: (state) => {
-      state.installProgress = "Pending";
+      state.installProgress = "Pending...";
     },
   },
 });
