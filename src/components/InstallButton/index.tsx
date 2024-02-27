@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
-import mixpanel from "mixpanel-browser";
+import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
@@ -52,8 +52,15 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     (state: RootState) => state.install.isInstalled
   );
 
+  const mixpanel = useMixpanel();
   const dispatch = useDispatch();
   const intl = useIntl();
+
+  const trackEvent = (eventName: string) => {
+    if (mixpanel) {
+      mixpanel.track(eventName);
+    }
+  };
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
@@ -62,7 +69,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     };
 
     const handleAppInstalled = () => {
-      mixpanel.track("landing_callback_pwa_installed");
+      trackEvent("landing_callback_pwa_installed");
     };
 
     window.addEventListener(
@@ -82,7 +89,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   }, [appLink, dispatch]);
 
   const installPWA = async () => {
-    mixpanel.track("landing_btn_install_pressed");
+    trackEvent("landing_btn_install_pressed");
     dispatch(install());
     if (installPromptRef.current) {
       await installPromptRef.current.prompt();
@@ -97,7 +104,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   };
 
   const openLink = () => {
-    mixpanel.track("landing_btn_open_pressed");
+    trackEvent("landing_btn_open_pressed");
     window.open(appLink, "_blank");
   };
 

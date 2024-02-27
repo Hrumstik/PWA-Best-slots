@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import mixpanel from "mixpanel-browser";
+import { useMixpanel } from "react-mixpanel-browser";
 import firstScreen from "../../images/firstScreen.webp";
 import secondScreen from "../../images/secondScreen.webp";
 import thirdScreen from "../../images/thirdScreen.webp";
@@ -8,10 +8,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
 
 export default function ContentSlider() {
+  const mixpanel = useMixpanel();
   const handleScreenshotClick = (screenName: string) => {
-    mixpanel.track("landing_screenshots_tapped", {
-      "Screen Name": screenName,
-    });
+    if (mixpanel) {
+      mixpanel.track("landing_screenshots_tapped", {
+        "Screen Name": screenName,
+      });
+    }
   };
 
   const settings = {

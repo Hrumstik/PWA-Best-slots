@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import mixpanel from "mixpanel-browser";
+import { useMixpanel } from "react-mixpanel-browser";
 import PageLoader from "../PageLoader";
 import StartAgainView from "../StartAgainView";
 
@@ -9,10 +9,11 @@ interface Props {
 
 const PwaView: React.FC<Props> = ({ pwaLink }) => {
   const [view, setView] = useState("loading");
+  const mixpanel = useMixpanel();
 
   useEffect(() => {
     const firstVisitPwa = localStorage.getItem("firstVisitPWA");
-    if (!firstVisitPwa) {
+    if (!firstVisitPwa && mixpanel) {
       localStorage.setItem("firstVisitPWA", "true");
       mixpanel.track("pwa_first_open");
     }
@@ -22,7 +23,7 @@ const PwaView: React.FC<Props> = ({ pwaLink }) => {
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [mixpanel]);
 
   return view === "loading" ? (
     <PageLoader pwaLink={pwaLink} />

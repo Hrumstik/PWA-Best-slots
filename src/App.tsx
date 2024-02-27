@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useMixpanel } from "react-mixpanel-browser";
 import { v4 as uuidv4 } from "uuid";
-import mixpanel from "mixpanel-browser";
 import MainView from "./components/MainView";
 import AboutView from "./components/AboutView";
 import PwaView from "./components/PwaView";
@@ -10,6 +10,7 @@ export default function Index() {
   const [pwaLink, setPwaLink] = useState("");
   const [view, setView] = useState("main");
   const [isPWAActive, setIsPWAActive] = useState(false);
+  const mixpanel = useMixpanel();
 
   useEffect(() => {
     const isPWAActivated = window.matchMedia(
@@ -27,6 +28,7 @@ export default function Index() {
     }
 
     const searchParams = new URLSearchParams(window.location.search);
+
     let newPwaLink = "https://leppzoo.ru/2fPMF1";
 
     searchParams.forEach((value, key) => {
@@ -36,8 +38,9 @@ export default function Index() {
     setPwaLink(newPwaLink);
 
     const trackFirstOpen = () => {
-      if (!localStorage.getItem("landing_page_firstOpen_tracked")) {
+      if (!localStorage.getItem("landing_page_firstOpen_tracked") && mixpanel) {
         const distinct_id = uuidv4();
+        console.log(distinct_id);
         localStorage.setItem("userId", distinct_id);
 
         const params = Object.fromEntries(searchParams);
@@ -46,7 +49,6 @@ export default function Index() {
         mixpanel.identify(distinct_id);
 
         mixpanel.track("landing_page_firstOpen", {
-          distinct_id,
           ...params,
         });
 
@@ -55,7 +57,7 @@ export default function Index() {
     };
 
     trackFirstOpen();
-  }, []);
+  }, [mixpanel]);
 
   let currentView;
 
