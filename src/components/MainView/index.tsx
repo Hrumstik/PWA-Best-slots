@@ -95,7 +95,7 @@ const MainView: React.FC<Props> = ({ setView }) => {
         <AppStatisticsCard>
           <AppStatisticsCardItem>
             <AppStatisticsCardItemTitle>
-              4,6 <StarIcon fontSize="inherit" />
+              4,8 <StarIcon fontSize="inherit" />
             </AppStatisticsCardItemTitle>
             <AppStatisticsCardItemContent>
               {intl.formatMessage({ id: "reviews" })}
@@ -145,7 +145,7 @@ const MainView: React.FC<Props> = ({ setView }) => {
       </AppDescriptionSection>
       <AppRatesAndSection>
         <AppRatesAndReviewsContainer>
-          <AppRateContainer>4,6</AppRateContainer>
+          <AppRateContainer>4,8</AppRateContainer>
           <AppStarsContainer>
             <Rating
               name="half-rating-read"
