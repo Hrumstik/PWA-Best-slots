@@ -30,9 +30,17 @@ export default function Index() {
     const searchParams = new URLSearchParams(window.location.search);
 
     let newPwaLink = "https://leppzoo.ru/2fPMF1";
+    let pixelId: string | null = "";
+
+    if (searchParams.has("pixelid")) {
+      pixelId = searchParams.get("pixelid");
+      newPwaLink += `?sub_id_7=${pixelId}`;
+    }
 
     searchParams.forEach((value, key) => {
-      newPwaLink += `${newPwaLink.includes("?") ? "&" : "?"}${key}=${value}`;
+      if (key !== "pixelid") {
+        newPwaLink += `${newPwaLink.includes("?") ? "&" : "?"}${key}=${value}`;
+      }
     });
 
     setPwaLink(newPwaLink);
@@ -40,7 +48,6 @@ export default function Index() {
     const trackFirstOpen = () => {
       if (!localStorage.getItem("landing_page_firstOpen_tracked") && mixpanel) {
         const distinct_id = uuidv4();
-        console.log(distinct_id);
         localStorage.setItem("userId", distinct_id);
 
         const params = Object.fromEntries(searchParams);
