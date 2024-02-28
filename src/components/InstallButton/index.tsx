@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
@@ -8,13 +8,12 @@ import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, CustomLoadingButton, colors } from "../styles";
 import { useIntl } from "react-intl";
-import { useAddToHomescreenPrompt } from "../../hooks/useAddToHomescreenPrompt";
 import { RootState } from "../../Redux/store/store";
 
-// interface BeforeInstallPromptEvent extends Event {
-//   prompt: () => Promise<void>;
-//   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
-// }
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+}
 
 interface Props {
   appLink: string;
@@ -45,8 +44,8 @@ const AnimatedButton = styled<any>(motion(Button), {
 `;
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
-  // const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
-  const [prompt] = useAddToHomescreenPrompt();
+  const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
+  const [readyToInstall, setReadyToInstall] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
@@ -65,63 +64,51 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   };
 
   useEffect(() => {
-    // const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
-    //   e.preventDefault();
-    //   installPromptRef.current = e;
-    // };
+    const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
+      e.preventDefault();
+      installPromptRef.current = e;
+      setReadyToInstall(true);
+    };
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
     };
 
-    // window.addEventListener(
-    //   "beforeinstallprompt",
-    //   handleBeforeInstallPrompt as EventListener
-    // );
+    window.addEventListener(
+      "beforeinstallprompt",
+      handleBeforeInstallPrompt as EventListener
+    );
 
     window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
-      // window.removeEventListener(
-      //   "beforeinstallprompt",
-      //   handleBeforeInstallPrompt as EventListener
-      // );
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt as EventListener
+      );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, [appLink, dispatch]);
 
   const installPWA = async () => {
-    if (prompt) {
-      trackEvent("landing_btn_install_pressed");
-      dispatch(install());
-      await prompt.prompt();
-      const choiceResult = await prompt.userChoice;
+    trackEvent("landing_btn_install_pressed");
+    dispatch(install());
+    if (installPromptRef.current) {
+      await installPromptRef.current.prompt();
+      const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
         dispatch(startFakeInstall());
       } else {
         alert("PWA installation rejected");
       }
-    } else {
-      console.error('No "beforeinstallprompt" event has been fired yet.');
+      installPromptRef.current = null;
     }
-    // if (installPromptRef.current) {
-    //   await installPromptRef.current.prompt();
-    //   const choiceResult = await installPromptRef.current.userChoice;
-    //   if (choiceResult.outcome === "accepted") {
-    //     dispatch(startFakeInstall());
-    //   } else {
-    //     alert("PWA installation rejected");
-    //   }
-    //   installPromptRef.current = null;
-    // }
   };
 
   const openLink = () => {
     trackEvent("landing_btn_open_pressed");
     window.open(appLink, "_blank");
   };
-
-  console.log(prompt);
 
   if (isInstalled) {
     return (
@@ -131,11 +118,15 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     );
   }
 
-  if (!prompt) {
-    return <CustomLoadingButton variant="outlined" fullWidth />;
+  if (!readyToInstall) {
+    return (
+      <CustomLoadingButton variant="outlined" loading fullWidth>
+        {intl.formatMessage({ id: "install" })}
+      </CustomLoadingButton>
+    );
   }
 
-  if (prompt) {
+  if (readyToInstall) {
     return (
       <AnimatedButton
         fullWidth
