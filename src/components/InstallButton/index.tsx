@@ -91,8 +91,8 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   }, [appLink, dispatch]);
 
   const installPWA = async () => {
-    trackEvent("landing_btn_install_pressed");
-    dispatch(install());
+    // trackEvent("landing_btn_install_pressed");
+    // dispatch(install());
     if (prompt) {
       await prompt.prompt();
       const choiceResult = await prompt.userChoice;
