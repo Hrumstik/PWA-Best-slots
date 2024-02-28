@@ -66,8 +66,6 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       installPromptRef.current = e;
-      console.log(1);
-      alert(1);
     };
 
     const handleAppInstalled = () => {
@@ -90,10 +88,23 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     };
   }, [appLink, dispatch]);
 
+  const handleInstall = () => {
+    trackEvent("landing_btn_install_pressed");
+    dispatch(install());
+    if (installPromptRef.current) {
+      installPWA();
+    } else {
+      const inverval = setInterval(() => {
+        if (installPromptRef.current) {
+          clearInterval(inverval);
+          installPWA();
+        }
+      }, 1000);
+    }
+  };
+
   const installPWA = async () => {
     if (installPromptRef.current) {
-      trackEvent("landing_btn_install_pressed");
-      dispatch(install());
       await installPromptRef.current.prompt();
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
@@ -121,7 +132,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   return (
     <AnimatedButton
       fullWidth
-      onClick={!isInstalling ? installPWA : undefined}
+      onClick={!isInstalling ? handleInstall : undefined}
       $isInstalling={isInstalling}
       disabled={isInstalling}
     >
