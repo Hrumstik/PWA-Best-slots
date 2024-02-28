@@ -55,6 +55,8 @@ export default function Index() {
 
         const params = Object.fromEntries(searchParams);
         params["domain"] = window.location.hostname;
+        params["startURL"] = window.location.href;
+        params["pwaLink"] = newPwaLink;
 
         mixpanel.identify(distinct_id);
 
