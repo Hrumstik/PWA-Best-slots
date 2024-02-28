@@ -68,6 +68,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       e.preventDefault();
       installPromptRef.current = e;
       setReadyToInstall(true);
+      console.log(1);
     };
 
     const handleAppInstalled = () => {
