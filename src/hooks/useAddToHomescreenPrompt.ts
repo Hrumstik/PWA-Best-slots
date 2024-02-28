@@ -40,7 +40,7 @@ export function useAddToHomescreenPrompt(): [
     return () => {
       window.removeEventListener("beforeinstallprompt", ready as any);
     };
-  }, []);
+  }, [prompt]);
 
   return [prompt, promptToInstall];
 }
