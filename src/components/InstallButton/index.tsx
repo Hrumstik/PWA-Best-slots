@@ -120,6 +120,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     trackEvent("landing_btn_open_pressed");
     window.open(appLink, "_blank");
   };
+
+  console.log(prompt);
+
   if (isInstalled) {
     return (
       <CustomButton fullWidth onClick={openLink}>
@@ -129,7 +132,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   }
 
   if (!prompt) {
-    return <CustomLoadingButton variant="outlined" loading fullWidth />;
+    return <CustomLoadingButton variant="outlined" fullWidth />;
   }
 
   if (prompt) {
