@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
@@ -44,8 +44,7 @@ const AnimatedButton = styled<any>(motion(Button), {
 `;
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
-  const [installPrompt, setInstallPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+  const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
@@ -66,10 +65,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      setInstallPrompt(e);
+      console.log(e);
+      installPromptRef.current = e;
     };
-
-    console.log(installPrompt);
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
@@ -94,16 +92,15 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   const installPWA = async () => {
     trackEvent("landing_btn_install_pressed");
     dispatch(install());
-    console.log(installPrompt);
-    if (installPrompt) {
-      await installPrompt.prompt();
-      const choiceResult = await installPrompt.userChoice;
+    if (installPromptRef.current) {
+      await installPromptRef.current.prompt();
+      const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
         dispatch(startFakeInstall());
       } else {
         alert("PWA installation rejected");
       }
-      setInstallPrompt(null);
+      installPromptRef.current = null;
     }
   };
 
