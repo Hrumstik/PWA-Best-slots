@@ -8,11 +8,6 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
-      strategies: "generateSW",
-      workbox: {
-        globDirectory: "public/",
-        globPatterns: ["index.html", "images/*.webp"],
-      },
       manifest: {
         name: "Best slots",
         display: "standalone",
