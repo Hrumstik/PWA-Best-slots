@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
@@ -63,15 +63,12 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       installPromptRef.current = e;
-    };
-
-    setTimeout(() => {
       setReadyToInstall(true);
-    }, 5000);
+    };
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
