@@ -71,7 +71,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
     setTimeout(() => {
       setReadyToInstall(true);
-    }, 8000);
+    }, 5000);
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
@@ -123,7 +123,16 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!readyToInstall) {
     return (
-      <CustomLoadingButton variant="outlined" loading fullWidth>
+      <CustomLoadingButton
+        variant="outlined"
+        loading
+        fullWidth
+        sx={{
+          "& .MuiCircularProgress-root": {
+            color: "white",
+          },
+        }}
+      >
         Loading…
       </CustomLoadingButton>
     );
