@@ -16,6 +16,8 @@ export function useAddToHomescreenPrompt(): [
 ] {
   const [prompt, setPromt] = useState<IBeforeInstallPromptEvent | null>(null);
 
+  console.log(prompt);
+
   const promptToInstall = () => {
     if (prompt) {
       return prompt.prompt();
