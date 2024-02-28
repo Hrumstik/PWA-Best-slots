@@ -6,8 +6,7 @@ import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { CustomButton, colors } from "../styles";
+import { CustomButton, CustomLoadingButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
 
@@ -83,13 +82,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
     window.addEventListener("appinstalled", handleAppInstalled);
 
-    const interval = setInterval(() => {
-      console.log(installPromptRef.current);
-      if (installPromptRef.current) {
-        setReadyToInstall(true);
-        clearInterval(interval);
-      }
-    }, 1000);
+    setTimeout(() => {
+      setReadyToInstall(true);
+    }, 5000);
 
     return () => {
       window.removeEventListener(
@@ -131,9 +126,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!readyToInstall) {
     return (
-      <LoadingButton variant="outlined" loading fullWidth onClick={installPWA}>
+      <CustomLoadingButton variant="outlined" loading fullWidth>
         {intl.formatMessage({ id: "install" })}
-      </LoadingButton>
+      </CustomLoadingButton>
     );
   }
 

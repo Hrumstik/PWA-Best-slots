@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "@emotion/styled";
 import { Divider as MuiDivider, Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export const colors = {
   mainText: "rgb(32, 33, 36)",
@@ -150,6 +151,27 @@ export const AgeLogoContainer = styled.div`
 `;
 
 export const CustomButton = styled(Button)({
+  // "@media (max-width: 480px)": {
+  backgroundColor: colors.buttonBackground,
+  borderRadius: "20px",
+  border: "none",
+  color: "white",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: `500`,
+  textTransform: "none",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: colors.primary,
+    boxShadow: "none",
+  },
+  "&:active": {
+    backgroundColor: colors.primary,
+  },
+  marginBottom: "24px",
+  // },
+});
+
+export const CustomLoadingButton = styled(LoadingButton)({
   // "@media (max-width: 480px)": {
   backgroundColor: colors.buttonBackground,
   borderRadius: "20px",
