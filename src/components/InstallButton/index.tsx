@@ -6,7 +6,6 @@ import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
@@ -84,12 +83,11 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.addEventListener("appinstalled", handleAppInstalled);
 
     const interval = setInterval(() => {
-      console.log(installPromptRef.current);
       if (installPromptRef.current) {
         setReadyToInstall(true);
         clearInterval(interval);
       }
-    }, 1000);
+    }, 5000);
 
     return () => {
       window.removeEventListener(
@@ -121,9 +119,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.open(appLink, "_blank");
   };
 
-  return !readyToInstall ? (
-    <LoadingButton loading fullWidth />
-  ) : isInstalled ? (
+  return isInstalled ? (
     <CustomButton fullWidth onClick={openLink}>
       {intl.formatMessage({ id: "open" })}
     </CustomButton>
@@ -135,7 +131,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       disabled={isInstalling || !readyToInstall}
     >
       {isInstalling
-        ? intl.formatMessage({ id: "installing" }) // You might want to change this text to "Installing..."
+        ? intl.formatMessage({ id: "open" })
         : intl.formatMessage({ id: "install" })}
     </AnimatedButton>
   );
