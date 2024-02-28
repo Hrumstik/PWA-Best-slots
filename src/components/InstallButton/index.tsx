@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
@@ -45,6 +45,7 @@ const AnimatedButton = styled<any>(motion(Button), {
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
+  const [readyToInstall, setReadyToInstall] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
@@ -67,6 +68,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       e.preventDefault();
       console.log(e);
       installPromptRef.current = e;
+      setReadyToInstall(true);
     };
 
     const handleAppInstalled = () => {
@@ -79,6 +81,13 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     );
 
     window.addEventListener("appinstalled", handleAppInstalled);
+
+    const interval = setInterval(() => {
+      if (installPromptRef.current) {
+        setReadyToInstall(true);
+        clearInterval(interval);
+      }
+    }, 5000);
 
     return () => {
       window.removeEventListener(
@@ -117,9 +126,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   ) : (
     <AnimatedButton
       fullWidth
-      onClick={!isInstalling ? installPWA : undefined}
+      onClick={!isInstalling && readyToInstall ? installPWA : undefined}
       $isInstalling={isInstalling}
-      disabled={isInstalling}
+      disabled={isInstalling || !readyToInstall}
     >
       {isInstalling
         ? intl.formatMessage({ id: "open" })
