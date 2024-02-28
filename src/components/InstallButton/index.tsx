@@ -6,6 +6,7 @@ import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
@@ -120,22 +121,36 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.open(appLink, "_blank");
   };
 
-  return isInstalled ? (
-    <CustomButton fullWidth onClick={openLink}>
-      {intl.formatMessage({ id: "open" })}
-    </CustomButton>
-  ) : (
-    <AnimatedButton
-      fullWidth
-      onClick={!isInstalling && readyToInstall ? installPWA : undefined}
-      $isInstalling={isInstalling}
-      disabled={isInstalling || !readyToInstall}
-    >
-      {isInstalling
-        ? intl.formatMessage({ id: "open" })
-        : intl.formatMessage({ id: "install" })}
-    </AnimatedButton>
-  );
+  if (isInstalled) {
+    return (
+      <CustomButton fullWidth onClick={openLink}>
+        {intl.formatMessage({ id: "open" })}
+      </CustomButton>
+    );
+  }
+
+  if (!readyToInstall) {
+    return (
+      <LoadingButton fullWidth onClick={installPWA}>
+        {intl.formatMessage({ id: "install" })}
+      </LoadingButton>
+    );
+  }
+
+  if (readyToInstall) {
+    return (
+      <AnimatedButton
+        fullWidth
+        onClick={!isInstalling ? installPWA : undefined}
+        $isInstalling={isInstalling}
+        disabled={isInstalling}
+      >
+        {isInstalling
+          ? intl.formatMessage({ id: "installing" })
+          : intl.formatMessage({ id: "install" })}
+      </AnimatedButton>
+    );
+  }
 };
 
 export default InstallButton;
