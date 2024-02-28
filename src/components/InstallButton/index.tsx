@@ -83,11 +83,12 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.addEventListener("appinstalled", handleAppInstalled);
 
     const interval = setInterval(() => {
+      console.log(installPromptRef.current);
       if (installPromptRef.current) {
         setReadyToInstall(true);
         clearInterval(interval);
       }
-    }, 5000);
+    }, 1000);
 
     return () => {
       window.removeEventListener(
