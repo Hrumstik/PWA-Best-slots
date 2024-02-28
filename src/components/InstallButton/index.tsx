@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
-import { CustomButton, colors } from "../styles";
+import { CustomButton, CustomLoadingButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
 
@@ -45,6 +45,7 @@ const AnimatedButton = styled<any>(motion(Button), {
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
+  const [readyToInstall, setReadyToInstall] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
@@ -68,6 +69,10 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       installPromptRef.current = e;
     };
 
+    setTimeout(() => {
+      setReadyToInstall(true);
+    }, 8000);
+
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
     };
@@ -88,23 +93,10 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     };
   }, [appLink, dispatch]);
 
-  const handleInstall = () => {
-    trackEvent("landing_btn_install_pressed");
-    dispatch(install());
-    if (installPromptRef.current) {
-      installPWA();
-    } else {
-      const inverval = setInterval(() => {
-        if (installPromptRef.current) {
-          clearInterval(inverval);
-          installPWA();
-        }
-      }, 1000);
-    }
-  };
-
   const installPWA = async () => {
     if (installPromptRef.current) {
+      trackEvent("landing_btn_install_pressed");
+      dispatch(install());
       await installPromptRef.current.prompt();
       const choiceResult = await installPromptRef.current.userChoice;
       if (choiceResult.outcome === "accepted") {
@@ -129,18 +121,31 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     );
   }
 
-  return (
-    <AnimatedButton
-      fullWidth
-      onClick={!isInstalling ? handleInstall : undefined}
-      $isInstalling={isInstalling}
-      disabled={isInstalling}
-    >
-      {isInstalling
-        ? intl.formatMessage({ id: "installing" })
-        : intl.formatMessage({ id: "install" })}
-    </AnimatedButton>
-  );
+  if (!readyToInstall) {
+    return (
+      <CustomLoadingButton
+        variant="outlined"
+        loadingIndicator="Loading…"
+        loading
+        fullWidth
+      />
+    );
+  }
+
+  if (readyToInstall) {
+    return (
+      <AnimatedButton
+        fullWidth
+        onClick={!isInstalling ? installPWA : undefined}
+        $isInstalling={isInstalling}
+        disabled={isInstalling}
+      >
+        {isInstalling
+          ? intl.formatMessage({ id: "installing" })
+          : intl.formatMessage({ id: "install" })}
+      </AnimatedButton>
+    );
+  }
 };
 
 export default InstallButton;
