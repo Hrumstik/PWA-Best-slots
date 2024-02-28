@@ -128,7 +128,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         loadingIndicator="Loading…"
         loading
         fullWidth
-      />
+      >
+        Loading…
+      </CustomLoadingButton>
     );
   }
 
