@@ -173,11 +173,10 @@ export const CustomButton = styled(Button)({
 
 export const CustomLoadingButton = styled(LoadingButton)({
   // "@media (max-width: 480px)": {
-  backgroundColor: colors.background,
+  backgroundColor: colors.buttonBackground,
   borderRadius: "20px",
   border: "none",
-  color: colors.disabledText,
-  boxShadow: "none",
+  color: "white",
   marginBottom: "24px",
   // },
 });

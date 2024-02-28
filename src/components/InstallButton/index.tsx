@@ -123,12 +123,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!readyToInstall) {
     return (
-      <CustomLoadingButton
-        variant="outlined"
-        loadingIndicator="Loading…"
-        loading
-        fullWidth
-      >
+      <CustomLoadingButton variant="outlined" loading fullWidth>
         Loading…
       </CustomLoadingButton>
     );
