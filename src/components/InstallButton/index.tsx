@@ -71,7 +71,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
     setTimeout(() => {
       setReadyToInstall(true);
-    }, 5000);
+    }, 8000);
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
