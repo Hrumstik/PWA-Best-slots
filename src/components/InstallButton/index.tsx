@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
-import { startFakeInstall } from "../../Redux/feat/InstallSlice";
+import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
-import { CustomButton, colors } from "../styles";
+import { CustomButton, CustomLoadingButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { useAddToHomescreenPrompt } from "../../hooks/useAddToHomescreenPrompt";
 import { RootState } from "../../Redux/store/store";
@@ -91,9 +91,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   }, [appLink, dispatch]);
 
   const installPWA = async () => {
-    // trackEvent("landing_btn_install_pressed");
-    // dispatch(install());
     if (prompt) {
+      trackEvent("landing_btn_install_pressed");
+      dispatch(install());
       await prompt.prompt();
       const choiceResult = await prompt.userChoice;
       if (choiceResult.outcome === "accepted") {
@@ -120,23 +120,32 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     trackEvent("landing_btn_open_pressed");
     window.open(appLink, "_blank");
   };
+  if (isInstalled) {
+    return (
+      <CustomButton fullWidth onClick={openLink}>
+        {intl.formatMessage({ id: "open" })}
+      </CustomButton>
+    );
+  }
 
-  return isInstalled ? (
-    <CustomButton fullWidth onClick={openLink}>
-      {intl.formatMessage({ id: "open" })}
-    </CustomButton>
-  ) : (
-    <AnimatedButton
-      fullWidth
-      onClick={!isInstalling ? installPWA : undefined}
-      $isInstalling={isInstalling}
-      disabled={isInstalling || !prompt}
-    >
-      {isInstalling
-        ? intl.formatMessage({ id: "open" })
-        : intl.formatMessage({ id: "install" })}
-    </AnimatedButton>
-  );
+  if (!prompt) {
+    return <CustomLoadingButton variant="outlined" loading fullWidth />;
+  }
+
+  if (prompt) {
+    return (
+      <AnimatedButton
+        fullWidth
+        onClick={!isInstalling ? installPWA : undefined}
+        $isInstalling={isInstalling}
+        disabled={isInstalling}
+      >
+        {isInstalling
+          ? intl.formatMessage({ id: "installing" })
+          : intl.formatMessage({ id: "install" })}
+      </AnimatedButton>
+    );
+  }
 };
 
 export default InstallButton;
