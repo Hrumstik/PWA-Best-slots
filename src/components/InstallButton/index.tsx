@@ -69,9 +69,15 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       installPromptRef.current = e;
     };
 
-    setTimeout(() => {
+    const fitstOpenPwa = localStorage.getItem("landing_page_firstOpen_tracked");
+
+    if (!fitstOpenPwa) {
+      setTimeout(() => {
+        setReadyToInstall(true);
+      }, 8000);
+    } else {
       setReadyToInstall(true);
-    }, 8000);
+    }
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
