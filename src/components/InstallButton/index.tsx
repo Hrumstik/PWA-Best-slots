@@ -131,7 +131,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!readyToInstall) {
     return (
-      <LoadingButton fullWidth onClick={installPWA}>
+      <LoadingButton variant="outlined" loading fullWidth onClick={installPWA}>
         {intl.formatMessage({ id: "install" })}
       </LoadingButton>
     );
