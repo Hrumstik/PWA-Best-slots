@@ -85,8 +85,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         handleBeforeInstallPrompt as EventListener
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
+      installPromptRef.current = null;
     };
-  }, [appLink, dispatch]);
+  }, []);
 
   const installPWA = async () => {
     trackEvent("landing_btn_install_pressed");
