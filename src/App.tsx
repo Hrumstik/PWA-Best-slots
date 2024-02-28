@@ -45,6 +45,9 @@ export default function Index() {
 
     setPwaLink(newPwaLink);
 
+    console.log(window.location.href);
+    console.log(newPwaLink);
+
     const trackFirstOpen = () => {
       if (!localStorage.getItem("landing_page_firstOpen_tracked") && mixpanel) {
         const distinct_id = uuidv4();
