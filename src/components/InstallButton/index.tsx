@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
-import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
+import { startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
