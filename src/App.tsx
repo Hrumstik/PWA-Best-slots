@@ -75,7 +75,7 @@ export default function Index() {
 
   switch (view) {
     case "main":
-      currentView = <MainView setView={setView} />;
+      currentView = <MainView pwaLink={pwaLink} setView={setView} />;
       break;
     case "about":
       currentView = <AboutView setView={setView} />;
