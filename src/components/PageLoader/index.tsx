@@ -1,12 +1,17 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { useMixpanel } from "react-mixpanel-browser";
 import { useEffect } from "react";
 import { colors } from "../styles";
 
 const PageLoader = () => {
+  const mixpanel = useMixpanel();
   useEffect(() => {
     const pwaLink = localStorage.getItem("pwaLink") as string;
     window.location.href = pwaLink;
+    if (mixpanel) {
+      mixpanel.track("pwa_openPage", { pwaLink });
+    }
   });
   return (
     <Box
