@@ -3,11 +3,7 @@ import { useMixpanel } from "react-mixpanel-browser";
 import PageLoader from "../PageLoader";
 import StartAgainView from "../StartAgainView";
 
-interface Props {
-  pwaLink: string;
-}
-
-const PwaView: React.FC<Props> = ({ pwaLink }) => {
+const PwaView = () => {
   const [view, setView] = useState("loading");
   const mixpanel = useMixpanel();
 
@@ -25,11 +21,7 @@ const PwaView: React.FC<Props> = ({ pwaLink }) => {
     return () => clearTimeout(timer);
   }, [mixpanel]);
 
-  return view === "loading" ? (
-    <PageLoader pwaLink={pwaLink} />
-  ) : (
-    <StartAgainView pwaLink={pwaLink} />
-  );
+  return view === "loading" ? <PageLoader /> : <StartAgainView />;
 };
 
 export default PwaView;

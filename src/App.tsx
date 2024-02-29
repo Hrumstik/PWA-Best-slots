@@ -7,7 +7,6 @@ import PwaView from "./components/PwaView";
 import ReviewsView from "./components/ReviewsView";
 
 export default function Index() {
-  const [pwaLink, setPwaLink] = useState("");
   const [view, setView] = useState("main");
   const [isPWAActive, setIsPWAActive] = useState(false);
   const mixpanel = useMixpanel();
@@ -42,8 +41,7 @@ export default function Index() {
         newPwaLink += `${newPwaLink.includes("?") ? "&" : "?"}${key}=${value}`;
       }
     });
-
-    setPwaLink(newPwaLink);
+    localStorage.setItem("pwaLink", newPwaLink);
 
     console.log(window.location.href);
     console.log(newPwaLink);
@@ -84,5 +82,5 @@ export default function Index() {
       currentView = <ReviewsView setView={setView} />;
   }
 
-  return isPWAActive ? <PwaView pwaLink={pwaLink} /> : <>{currentView}</>;
+  return isPWAActive ? <PwaView /> : <>{currentView}</>;
 }

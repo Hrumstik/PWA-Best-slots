@@ -3,12 +3,9 @@ import Box from "@mui/material/Box";
 import { useEffect } from "react";
 import { colors } from "../styles";
 
-interface Props {
-  pwaLink: string;
-}
-
-const PageLoader: React.FC<Props> = ({ pwaLink }) => {
+const PageLoader = () => {
   useEffect(() => {
+    const pwaLink = localStorage.getItem("pwaLink") as string;
     window.location.href = pwaLink;
   });
   return (
