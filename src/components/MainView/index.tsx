@@ -38,7 +38,6 @@ import InstallationProgess from "../InstallationProgress";
 
 interface Props {
   setView: Dispatch<SetStateAction<string>>;
-  pwaLink: string;
 }
 
 const reviewsData = [
@@ -78,7 +77,7 @@ const ratingsData = [
   { stars: 1, rating: 3 },
 ];
 
-const MainView: React.FC<Props> = ({ setView, pwaLink }) => {
+const MainView: React.FC<Props> = ({ setView }) => {
   const intl = useIntl();
 
   return (
@@ -121,7 +120,7 @@ const MainView: React.FC<Props> = ({ setView, pwaLink }) => {
             </AppStatisticsCardItemContent>
           </AppStatisticsCardItem>
         </AppStatisticsCard>
-        <InstallButton pwaLink={pwaLink} />
+        <InstallButton appLink="/" />
         <ContentSlider />
         <AboutGameContainer>
           <OpenSectionButton

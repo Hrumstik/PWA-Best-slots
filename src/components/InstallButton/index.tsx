@@ -16,7 +16,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 interface Props {
-  pwaLink: string;
+  appLink: string;
 }
 
 const AnimatedButton = styled<any>(motion(Button), {
@@ -43,7 +43,7 @@ const AnimatedButton = styled<any>(motion(Button), {
   }
 `;
 
-const InstallButton: React.FC<Props> = ({ pwaLink }) => {
+const InstallButton: React.FC<Props> = ({ appLink }) => {
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const [readyToInstall, setReadyToInstall] = useState(false);
   const isInstalling = useSelector(
@@ -97,7 +97,7 @@ const InstallButton: React.FC<Props> = ({ pwaLink }) => {
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, [dispatch]);
+  }, [appLink, dispatch]);
 
   const installPWA = async () => {
     if (installPromptRef.current) {
@@ -116,7 +116,7 @@ const InstallButton: React.FC<Props> = ({ pwaLink }) => {
 
   const openLink = () => {
     trackEvent("landing_btn_open_pressed");
-    window.open(pwaLink, "_blank");
+    window.open(appLink, "_blank");
   };
 
   if (isInstalled) {
