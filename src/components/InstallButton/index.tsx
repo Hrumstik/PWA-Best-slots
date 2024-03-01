@@ -65,16 +65,19 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
-      setTimeout(() => {
-        e.preventDefault();
-        installPromptRef.current = e;
-        setReadyToInstall(true);
-      }, 2000);
+      e.preventDefault();
+      installPromptRef.current = e;
     };
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
     };
+
+    const handleWindowLoad = () => {
+      setReadyToInstall(true);
+    };
+
+    window.onload = handleWindowLoad;
 
     window.addEventListener(
       "beforeinstallprompt",
@@ -89,6 +92,8 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         handleBeforeInstallPrompt as EventListener
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
+
+      window.onload = null;
     };
   }, [appLink, dispatch]);
 
