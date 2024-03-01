@@ -82,7 +82,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         setTimeout(() => {
           setIsInstalled(true);
           dispatch(stopInstalling());
-        }, 1000);
+        }, 7000);
       }
     };
 
