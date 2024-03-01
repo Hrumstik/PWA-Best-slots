@@ -65,9 +65,11 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
-      e.preventDefault();
-      installPromptRef.current = e;
-      setReadyToInstall(true);
+      setTimeout(() => {
+        e.preventDefault();
+        installPromptRef.current = e;
+        setReadyToInstall(true);
+      }, 2000);
     };
 
     const handleAppInstalled = () => {
