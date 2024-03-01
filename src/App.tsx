@@ -41,6 +41,7 @@ export default function Index() {
         newPwaLink += `${newPwaLink.includes("?") ? "&" : "?"}${key}=${value}`;
       }
     });
+
     const pwaLink = localStorage.getItem("pwaLink");
     if (!pwaLink) {
       localStorage.setItem("pwaLink", newPwaLink);
