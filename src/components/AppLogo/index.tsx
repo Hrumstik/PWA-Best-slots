@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import {
   setInstallProgress,
   setInstallProgressIsPending,
-  setIsInstalled,
+  setIsDownloaded,
   stopFakeInstall,
   stopInstalling,
 } from "../../Redux/feat/InstallSlice";
@@ -53,7 +53,7 @@ function AppLogo() {
           clearInterval(interval);
           dispatch(stopInstalling());
           setInstallProgress(0);
-          dispatch(setIsInstalled());
+          dispatch(setIsDownloaded());
         }
       }, 1000);
     };
