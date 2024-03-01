@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface InstalState {
   isInstalling: boolean;
   fakeInstall: boolean;
-  isInstalled: boolean;
+  isDownloaded: boolean;
   installProgress: string;
 }
 
 const initialState: InstalState = {
   isInstalling: false,
   fakeInstall: false,
-  isInstalled: false,
+  isDownloaded: false,
   installProgress: "Waiting...",
 };
 
@@ -30,8 +30,8 @@ export const instalSlice = createSlice({
     stopInstalling: (state) => {
       state.isInstalling = false;
     },
-    setIsInstalled: (state) => {
-      state.isInstalled = true;
+    setIsDownloaded: (state) => {
+      state.isDownloaded = true;
     },
     setInstallProgress: (state, action) => {
       state.installProgress = action.payload + "% of 15 MB";
@@ -47,7 +47,7 @@ export const {
   stopInstalling,
   startFakeInstall,
   stopFakeInstall,
-  setIsInstalled,
+  setIsDownloaded,
   setInstallProgress,
   setInstallProgressIsPending,
 } = instalSlice.actions;

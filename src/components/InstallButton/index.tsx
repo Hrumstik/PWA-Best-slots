@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
 import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
-import { CustomButton, CustomLoadingButton, colors } from "../styles";
+import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
 import { RootState } from "../../Redux/store/store";
 
@@ -44,14 +44,13 @@ const AnimatedButton = styled<any>(motion(Button), {
 `;
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
-  const [installPrompt, setInstallPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
-  const [readyToInstall, setReadyToInstall] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
   );
-  const isInstalled = useSelector(
-    (state: RootState) => state.install.isInstalled
+  const isDownloaded = useSelector(
+    (state: RootState) => state.install.isDownloaded
   );
 
   const mixpanel = useMixpanel();
@@ -67,11 +66,16 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      setInstallPrompt(e);
+      installPromptRef.current = e;
     };
 
     const handleAppInstalled = () => {
-      trackEvent("landing_callback_pwa_installed");
+      if (mixpanel) {
+        mixpanel.track("landing_callback_pwa_installed");
+        setTimeout(() => {
+          setIsInstalled(true);
+        }, 1000);
+      }
     };
 
     window.addEventListener(
@@ -88,26 +92,18 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, [appLink, dispatch]);
+  }, [appLink, dispatch, mixpanel]);
 
-  useEffect(() => {
-    if (installPrompt) {
-      setReadyToInstall(true);
-    }
-  }, [installPrompt]);
+  const downloadPWA = () => {
+    dispatch(startFakeInstall());
+  };
 
   const installPWA = async () => {
-    if (installPrompt) {
+    if (installPromptRef.current) {
       trackEvent("landing_btn_install_pressed");
       dispatch(install());
-      await installPrompt.prompt();
-      const choiceResult = await installPrompt.userChoice;
-      if (choiceResult.outcome === "accepted") {
-        dispatch(startFakeInstall());
-      } else {
-        alert("PWA installation rejected");
-      }
-      setInstallPrompt(null);
+      await installPromptRef.current.prompt();
+      installPromptRef.current = null;
     }
   };
 
@@ -116,7 +112,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.open(appLink, "_blank");
   };
 
-  if (isInstalled) {
+  if (isDownloaded && isInstalled) {
     return (
       <CustomButton fullWidth onClick={openLink}>
         {intl.formatMessage({ id: "open" })}
@@ -124,28 +120,27 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     );
   }
 
-  if (!readyToInstall) {
+  if (!isDownloaded && !isInstalled) {
     return (
-      <CustomLoadingButton
-        variant="outlined"
-        loading
-        fullWidth
-        sx={{
-          "& .MuiCircularProgress-root": {
-            color: "white",
-          },
-        }}
-      >
-        Loading…
-      </CustomLoadingButton>
+      <CustomButton fullWidth onClick={installPWA}>
+        {intl.formatMessage({ id: "download" })}
+      </CustomButton>
     );
   }
 
-  if (readyToInstall) {
+  if (!isDownloaded && !isInstalled) {
+    return (
+      <CustomButton fullWidth onClick={installPWA}>
+        {intl.formatMessage({ id: "download" })}
+      </CustomButton>
+    );
+  }
+
+  if (isDownloaded && !isInstalled) {
     return (
       <AnimatedButton
         fullWidth
-        onClick={!isInstalling ? installPWA : undefined}
+        onClick={!isInstalling ? downloadPWA : undefined}
         $isInstalling={isInstalling}
         disabled={isInstalling}
       >
