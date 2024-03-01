@@ -9,11 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store/store";
 import { useEffect, useState } from "react";
 import {
-  setInstallProgress,
-  setInstallProgressIsPending,
+  setFakeDownloadProgress,
+  setFakeDownloadIsPending,
   setIsDownloaded,
-  stopFakeInstall,
-  stopInstalling,
+  stopFakeFakeDownload,
 } from "../../Redux/feat/InstallSlice";
 
 function AppLogo() {
@@ -24,8 +23,8 @@ function AppLogo() {
     (state: RootState) => state.install.isInstalling
   );
 
-  const isFakeInstallStarted = useSelector(
-    (state: RootState) => state.install.fakeInstall
+  const isFakeDownloadStarted = useSelector(
+    (state: RootState) => state.install.fakeDownload
   );
 
   useEffect(() => {
@@ -39,33 +38,32 @@ function AppLogo() {
         progress = Math.min(progress, 100);
         progress = Math.floor(progress);
 
-        dispatch(setInstallProgress(progress));
+        dispatch(setFakeDownloadProgress(progress));
         setInstallProgressNumber(progress);
 
         const elapsedTime = (Date.now() - startTime) / 1000;
 
-        if (progress >= 100 && elapsedTime <= 15) {
-          dispatch(setInstallProgressIsPending());
-          dispatch(stopFakeInstall());
+        if (progress >= 100 && elapsedTime <= 8) {
+          dispatch(setFakeDownloadIsPending());
         }
 
-        if (progress >= 100 && elapsedTime >= 15) {
+        if (progress >= 100 && elapsedTime >= 8) {
           clearInterval(interval);
-          dispatch(stopInstalling());
-          setInstallProgress(0);
+          dispatch(stopFakeFakeDownload());
+          dispatch(setFakeDownloadProgress(0));
           dispatch(setIsDownloaded());
         }
       }, 1000);
     };
 
-    if (isFakeInstallStarted) {
+    if (isFakeDownloadStarted) {
       fakeInstall();
     }
-  }, [isFakeInstallStarted, dispatch]);
+  }, [isFakeDownloadStarted, dispatch]);
 
-  const showCircularProgress = isInstalling && isFakeInstallStarted;
-  const showPermanentCircularProgress = isInstalling && !isFakeInstallStarted;
-  const showLogo = !isInstalling && !isFakeInstallStarted;
+  const showCircularProgress = isFakeDownloadStarted;
+  const showPermanentCircularProgress = isInstalling && !isFakeDownloadStarted;
+  const showLogo = !isInstalling && !isFakeDownloadStarted;
 
   return (
     <>

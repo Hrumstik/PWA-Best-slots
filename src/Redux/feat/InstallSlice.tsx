@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface InstalState {
   isInstalling: boolean;
-  fakeInstall: boolean;
+  fakeDownload: boolean;
   isDownloaded: boolean;
-  installProgress: string;
+  fakeDownloadProgress: string;
 }
 
 const initialState: InstalState = {
   isInstalling: false,
-  fakeInstall: false,
+  fakeDownload: false,
   isDownloaded: false,
-  installProgress: "Waiting...",
+  fakeDownloadProgress: "Waiting...",
 };
 
 export const instalSlice = createSlice({
@@ -21,11 +21,11 @@ export const instalSlice = createSlice({
     install: (state) => {
       state.isInstalling = true;
     },
-    startFakeInstall: (state) => {
-      state.fakeInstall = true;
+    startFakeDownload: (state) => {
+      state.fakeDownload = true;
     },
-    stopFakeInstall: (state) => {
-      state.fakeInstall = false;
+    stopFakeFakeDownload: (state) => {
+      state.fakeDownload = false;
     },
     stopInstalling: (state) => {
       state.isInstalling = false;
@@ -33,11 +33,11 @@ export const instalSlice = createSlice({
     setIsDownloaded: (state) => {
       state.isDownloaded = true;
     },
-    setInstallProgress: (state, action) => {
-      state.installProgress = action.payload + "% of 15 MB";
+    setFakeDownloadProgress: (state, action) => {
+      state.fakeDownloadProgress = action.payload + "% of 15 MB";
     },
-    setInstallProgressIsPending: (state) => {
-      state.installProgress = "Pending...";
+    setFakeDownloadIsPending: (state) => {
+      state.fakeDownloadProgress = "Pending...";
     },
   },
 });
@@ -45,11 +45,11 @@ export const instalSlice = createSlice({
 export const {
   install,
   stopInstalling,
-  startFakeInstall,
-  stopFakeInstall,
+  startFakeDownload,
+  stopFakeFakeDownload,
   setIsDownloaded,
-  setInstallProgress,
-  setInstallProgressIsPending,
+  setFakeDownloadProgress,
+  setFakeDownloadIsPending,
 } = instalSlice.actions;
 
 export default instalSlice.reducer;

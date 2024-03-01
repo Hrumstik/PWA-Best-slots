@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
 import { useSelector, useDispatch } from "react-redux";
-import { install, startFakeInstall } from "../../Redux/feat/InstallSlice";
+import {
+  install,
+  startFakeDownload,
+  stopInstalling,
+} from "../../Redux/feat/InstallSlice";
 import { Button } from "@mui/material";
 import { CustomButton, colors } from "../styles";
 import { useIntl } from "react-intl";
@@ -52,6 +56,9 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   const isDownloaded = useSelector(
     (state: RootState) => state.install.isDownloaded
   );
+  const isDownloading = useSelector(
+    (state: RootState) => state.install.fakeDownload
+  );
 
   const mixpanel = useMixpanel();
   const dispatch = useDispatch();
@@ -74,6 +81,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         mixpanel.track("landing_callback_pwa_installed");
         setTimeout(() => {
           setIsInstalled(true);
+          dispatch(stopInstalling());
         }, 1000);
       }
     };
@@ -95,7 +103,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   }, [appLink, dispatch, mixpanel]);
 
   const downloadPWA = () => {
-    dispatch(startFakeInstall());
+    dispatch(startFakeDownload());
   };
 
   const installPWA = async () => {
@@ -122,9 +130,16 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!isDownloaded && !isInstalled) {
     return (
-      <CustomButton fullWidth onClick={downloadPWA}>
-        {intl.formatMessage({ id: "download" })}
-      </CustomButton>
+      <AnimatedButton
+        fullWidth
+        onClick={!isDownloading ? downloadPWA : undefined}
+        $isInstalling={isDownloading}
+        disabled={isDownloading}
+      >
+        {isDownloading
+          ? intl.formatMessage({ id: "downloading" })
+          : intl.formatMessage({ id: "download" })}
+      </AnimatedButton>
     );
   }
 

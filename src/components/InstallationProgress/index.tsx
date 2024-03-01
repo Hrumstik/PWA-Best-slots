@@ -12,17 +12,17 @@ import { RootState } from "../../Redux/store/store";
 export default function InstallationProgess() {
   const intl = useIntl();
 
-  const isInstalling = useSelector(
-    (state: RootState) => state.install.isInstalling
+  const isDownloadeding = useSelector(
+    (state: RootState) => state.install.fakeDownload
   );
 
-  const installProgress = useSelector(
-    (state: RootState) => state.install.installProgress
+  const fakeDownloadProgress = useSelector(
+    (state: RootState) => state.install.fakeDownloadProgress
   );
 
-  return isInstalling ? (
+  return isDownloadeding ? (
     <InstallationProgessWrapper>
-      <PercentagesMessage>{installProgress}</PercentagesMessage>
+      <PercentagesMessage>{fakeDownloadProgress}</PercentagesMessage>
       <VerifiedConteiner>
         <VerifiedUserOutlinedIcon sx={{ fontSize: 10, color: "green" }} />
         {intl.formatMessage({ id: "verified" })}
