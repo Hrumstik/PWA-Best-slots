@@ -122,15 +122,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
 
   if (!isDownloaded && !isInstalled) {
     return (
-      <CustomButton fullWidth onClick={installPWA}>
-        {intl.formatMessage({ id: "download" })}
-      </CustomButton>
-    );
-  }
-
-  if (!isDownloaded && !isInstalled) {
-    return (
-      <CustomButton fullWidth onClick={installPWA}>
+      <CustomButton fullWidth onClick={downloadPWA}>
         {intl.formatMessage({ id: "download" })}
       </CustomButton>
     );
@@ -140,7 +132,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     return (
       <AnimatedButton
         fullWidth
-        onClick={!isInstalling ? downloadPWA : undefined}
+        onClick={!isInstalling ? installPWA : undefined}
         $isInstalling={isInstalling}
         disabled={isInstalling}
       >
