@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { useMixpanel } from "react-mixpanel-browser";
@@ -44,7 +44,8 @@ const AnimatedButton = styled<any>(motion(Button), {
 `;
 
 const InstallButton: React.FC<Props> = ({ appLink }) => {
-  const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [readyToInstall, setReadyToInstall] = useState(false);
   const isInstalling = useSelector(
     (state: RootState) => state.install.isInstalling
@@ -66,18 +67,12 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      installPromptRef.current = e;
+      setInstallPrompt(e);
     };
 
     const handleAppInstalled = () => {
       trackEvent("landing_callback_pwa_installed");
     };
-
-    const handleWindowLoad = () => {
-      setReadyToInstall(true);
-    };
-
-    window.onload = handleWindowLoad;
 
     window.addEventListener(
       "beforeinstallprompt",
@@ -92,23 +87,27 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
         handleBeforeInstallPrompt as EventListener
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
-
-      window.onload = null;
     };
   }, [appLink, dispatch]);
 
+  useEffect(() => {
+    if (installPrompt) {
+      setReadyToInstall(true);
+    }
+  }, [installPrompt]);
+
   const installPWA = async () => {
-    if (installPromptRef.current) {
+    if (installPrompt) {
       trackEvent("landing_btn_install_pressed");
       dispatch(install());
-      await installPromptRef.current.prompt();
-      const choiceResult = await installPromptRef.current.userChoice;
+      await installPrompt.prompt();
+      const choiceResult = await installPrompt.userChoice;
       if (choiceResult.outcome === "accepted") {
         dispatch(startFakeInstall());
       } else {
         alert("PWA installation rejected");
       }
-      installPromptRef.current = null;
+      setInstallPrompt(null);
     }
   };
 
