@@ -1,8 +1,5 @@
 import Slider from "react-slick";
 import { useMixpanel } from "react-mixpanel-browser";
-import firstScreen from "../../images/firstScreen.webp";
-import secondScreen from "../../images/secondScreen.webp";
-import thirdScreen from "../../images/thirdScreen.webp";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
@@ -51,7 +48,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src={firstScreen}
+                src="../../../public/images/firstScreen.webp"
                 width={360}
                 height={720}
                 alt="First screen"
@@ -70,7 +67,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src={secondScreen}
+                src="../../../public/images/secondScreen.webp"
                 width={360}
                 height={720}
                 style={{
@@ -89,7 +86,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src={thirdScreen}
+                src="../../../public/images/thirdScreen.webp"
                 width={360}
                 height={720}
                 style={{
