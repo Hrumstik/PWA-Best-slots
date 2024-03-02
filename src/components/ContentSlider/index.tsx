@@ -6,6 +6,7 @@ import firstScreen from "../../images/firstScreen.webp";
 import secondScreen from "../../images/secondScreen.webp";
 import thirdScreen from "../../images/thirdScreen.webp";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
+import { useEffect } from "react";
 
 export default function ContentSlider() {
   const mixpanel = useMixpanel();
