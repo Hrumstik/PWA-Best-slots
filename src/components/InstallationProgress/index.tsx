@@ -16,11 +16,15 @@ export default function InstallationProgess() {
     (state: RootState) => state.install.fakeDownload
   );
 
+  const isProgress = useSelector(
+    (state: RootState) => state.install.isInstalling
+  );
+
   const fakeDownloadProgress = useSelector(
     (state: RootState) => state.install.fakeDownloadProgress
   );
 
-  return isDownloadeding ? (
+  return isDownloadeding || isProgress ? (
     <InstallationProgessWrapper>
       <PercentagesMessage>{fakeDownloadProgress}</PercentagesMessage>
       <VerifiedConteiner>

@@ -10,7 +10,6 @@ import { RootState } from "../../Redux/store/store";
 import { useEffect, useState } from "react";
 import {
   setFakeDownloadProgress,
-  setFakeDownloadIsPending,
   setIsDownloaded,
   stopFakeFakeDownload,
 } from "../../Redux/feat/InstallSlice";
@@ -43,11 +42,7 @@ function AppLogo() {
 
         const elapsedTime = (Date.now() - startTime) / 1000;
 
-        if (progress >= 100 && elapsedTime <= 8) {
-          dispatch(setFakeDownloadIsPending());
-        }
-
-        if (progress >= 100 && elapsedTime >= 8) {
+        if (progress >= 100 && elapsedTime >= 7) {
           clearInterval(interval);
           dispatch(stopFakeFakeDownload());
           dispatch(setFakeDownloadProgress(0));

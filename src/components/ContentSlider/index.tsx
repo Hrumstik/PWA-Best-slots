@@ -52,8 +52,8 @@ export default function ContentSlider() {
             <ScreenContainer>
               <img
                 src={firstScreen}
-                width={1080}
-                height={1920}
+                width={360}
+                height={720}
                 alt="First screen"
                 style={{
                   objectFit: "cover",
@@ -71,8 +71,8 @@ export default function ContentSlider() {
             <ScreenContainer>
               <img
                 src={secondScreen}
-                width={1080}
-                height={1920}
+                width={360}
+                height={720}
                 style={{
                   objectFit: "cover",
                   width: "100%",
@@ -90,8 +90,8 @@ export default function ContentSlider() {
             <ScreenContainer>
               <img
                 src={thirdScreen}
-                width={1080}
-                height={1920}
+                width={360}
+                height={720}
                 style={{
                   objectFit: "cover",
                   width: "100%",
