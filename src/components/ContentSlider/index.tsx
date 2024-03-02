@@ -2,10 +2,14 @@ import Slider from "react-slick";
 import { useMixpanel } from "react-mixpanel-browser";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import firstScreen from "../../images/firstScreen.webp";
+import secondScreen from "../../images/secondScreen.webp";
+import thirdScreen from "../../images/thirdScreen.webp";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
 
 export default function ContentSlider() {
   const mixpanel = useMixpanel();
+
   const handleScreenshotClick = (screenName: string) => {
     if (mixpanel) {
       mixpanel.track("landing_screenshots_tapped", {
@@ -13,6 +17,14 @@ export default function ContentSlider() {
       });
     }
   };
+
+  useEffect(() => {
+    const images = [firstScreen, secondScreen, thirdScreen];
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
 
   const settings = {
     dots: false,
@@ -48,7 +60,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src="../../../public/images/firstScreen.webp"
+                src={firstScreen}
                 width={360}
                 height={720}
                 alt="First screen"
@@ -67,7 +79,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src="../../../public/images/secondScreen.webp"
+                src={secondScreen}
                 width={360}
                 height={720}
                 style={{
@@ -86,7 +98,7 @@ export default function ContentSlider() {
           >
             <ScreenContainer>
               <img
-                src="../../../public/images/thirdScreen.webp"
+                src={thirdScreen}
                 width={360}
                 height={720}
                 style={{
