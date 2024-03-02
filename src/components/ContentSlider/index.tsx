@@ -6,7 +6,6 @@ import firstScreen from "../../images/firstScreen.webp";
 import secondScreen from "../../images/secondScreen.webp";
 import thirdScreen from "../../images/thirdScreen.webp";
 import { ScreenContainer, ScreenWrapperItem, SliderContainer } from "../styles";
-import { useEffect } from "react";
 
 export default function ContentSlider() {
   const mixpanel = useMixpanel();
@@ -18,14 +17,6 @@ export default function ContentSlider() {
       });
     }
   };
-
-  useEffect(() => {
-    const images = [firstScreen, secondScreen, thirdScreen];
-    images.forEach((image) => {
-      const img = new Image();
-      img.src = image;
-    });
-  }, []);
 
   const settings = {
     dots: false,
